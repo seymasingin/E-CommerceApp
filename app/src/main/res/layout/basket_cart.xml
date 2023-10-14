@@ -29,7 +29,7 @@
             app:srcCompat="@drawable/placeholder_icon" />
 
         <ImageView
-            android:id="@+id/basketDeleteImage"
+            android:id="@+id/basketDeleteProduct"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_marginTop="16dp"
@@ -45,7 +45,7 @@
             android:layout_marginBottom="24dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/basketDeleteImage" />
+            app:layout_constraintEnd_toEndOf="@+id/basketDeleteProduct" />
 
         <TextView
             android:id="@+id/basketCartTitle"

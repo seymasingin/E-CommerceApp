@@ -2,6 +2,7 @@ package com.seymasingin.e_commerceapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.seymasingin.e_commerceapp.common.viewBinding
@@ -15,9 +16,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //MainApplication.provide
+        MainApplication.provideRetrofit(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         NavigationUI.setupWithNavController(binding.bottomNav, navHostFragment.navController)
+
+        /*navHostFragment.navController.addOnDestinationChangedListener{ _, destination, _ ->
+            if(destination.id == R.id.splashFragment ||
+                destination.id == R.id.signUpFragment ||
+                destination.id == R.id.signInFragment ){
+                binding.bottomNav.visibility = View.GONE
+            }
+            else{
+                binding.bottomNav.visibility = View.VISIBLE
+            }
+        }*/
     }
 }

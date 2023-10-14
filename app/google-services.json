@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "211492355067",
+    "project_id": "e-commerce-de338",
+    "storage_bucket": "e-commerce-de338.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211492355067:android:8df8ec73e0550f4b7d695e",
+        "android_client_info": {
+          "package_name": "com.seymasingin.e_commerceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFTX_VKYLxbvlSZMx-708INgZ_LGF7ZLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
