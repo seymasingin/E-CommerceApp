@@ -22,7 +22,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val productAdapter = ProductsAdapter(onFavClick = ::onFavClick, onProductClick = ::onProductClick)
     private val saleAdapter = SaleProductsAdapter(onSaleClick = ::onSaleClick)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,7 +45,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
                 Log.e("GetProducts", t.message.orEmpty())
             }
@@ -66,7 +64,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
                 Log.e("GetSaleProducts", t.message.orEmpty())
             }

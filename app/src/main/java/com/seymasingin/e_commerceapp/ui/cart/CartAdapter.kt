@@ -10,16 +10,13 @@ import com.seymasingin.e_commerceapp.databinding.BasketCartBinding
 class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit): RecyclerView.Adapter<CartAdapter.CartHolder>() {
 
     private val cartList = ArrayList<Product>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartHolder {
         val binding = BasketCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CartHolder(binding, onDeleteFromBasket)
     }
-
     override fun onBindViewHolder(holder: CartHolder, position: Int) {
         holder.bind(cartList[position])
     }
-
     class CartHolder(private val binding: BasketCartBinding,
                      private val onDeleteFromBasket: (Int) -> Unit):RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
@@ -33,11 +30,9 @@ class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit): RecyclerView.A
             }
         }
     }
-
     override fun getItemCount(): Int {
         return cartList.size
     }
-
     fun updateList(list:List<Product>) {
         cartList.clear()
         cartList.addAll(list)

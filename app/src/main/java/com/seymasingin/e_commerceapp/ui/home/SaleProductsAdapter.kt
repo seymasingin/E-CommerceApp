@@ -11,16 +11,13 @@ import com.seymasingin.e_commerceapp.databinding.SaleCartBinding
 class SaleProductsAdapter(private val onSaleClick: (Int) -> Unit): RecyclerView.Adapter<SaleProductsAdapter.SaleHolder>() {
 
     private val saleList = ArrayList<Product>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SaleHolder {
         val binding = SaleCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SaleHolder(binding, onSaleClick)
     }
-
     override fun onBindViewHolder(holder: SaleHolder, position: Int) {
         holder.bind(saleList[position])
     }
-
     class SaleHolder(private val binding: SaleCartBinding,
                      private val onSaleClick: (Int) -> Unit): RecyclerView.ViewHolder(binding.root){
         fun bind(product: Product){
@@ -36,11 +33,9 @@ class SaleProductsAdapter(private val onSaleClick: (Int) -> Unit): RecyclerView.
             }
         }
     }
-
     override fun getItemCount(): Int {
         return saleList.size
     }
-
     fun updateList(list: List<Product>) {
         saleList.clear()
         saleList.addAll(list)

@@ -37,7 +37,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     binding.apply {
                         titleDetail.text = product.title
                         descriptionDetail.text = product.description
-                        star.text = product.rate.toString()
                         priceDetail.text = "${product.price} £"
                         btnAddCart.setOnClickListener {
 
@@ -45,9 +44,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         fabBack.setOnClickListener {
                             requireActivity().onBackPressedDispatcher.onBackPressed()
                         }
-
-
-
+                        star.text = product.rate.toString()
                         val images = listOf(product.imageOne, product.imageTwo, product.imageThree)
                         val imageAdapter = ImageAdapter(images)
                         binding.viewPager2.adapter = imageAdapter

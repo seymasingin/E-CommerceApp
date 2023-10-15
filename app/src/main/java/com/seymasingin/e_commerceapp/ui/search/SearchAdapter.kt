@@ -47,7 +47,6 @@ class SearchAdapter(private val onFavClick:(Int) -> Unit,
             }
         }
     }
-
     override fun getItemCount(): Int {
        return productList.size
     }

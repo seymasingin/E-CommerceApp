@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bej"
     tools:context=".ui.detail.DetailFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:src="@drawable/back_icon"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/darkgray"
         app:fabCustomSize="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,11 +44,13 @@
     <Button
         android:id="@+id/btnAddCart"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="48dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/darkgray"
         android:text="ADD TO BASKET"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,9 +72,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:progressTint="#4E949E"
-        android:rating="3.2"
         android:max="5"
+        android:progressTint="@color/darkgray"
+        android:rating="3.2"
         app:layout_constraintStart_toStartOf="@+id/titleDetail"
         app:layout_constraintTop_toBottomOf="@+id/titleDetail" />
 

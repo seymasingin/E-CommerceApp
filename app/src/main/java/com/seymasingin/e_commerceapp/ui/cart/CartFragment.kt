@@ -30,7 +30,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             rvCart.adapter = cartAdapter
         }
     }
-
     fun getCartProducts(userId: Int) {
         MainApplication.productService?.getCartProducts(userId)?.enqueue(object : Callback<GetProductsResponse>{
             override fun onResponse(call: Call<GetProductsResponse>, response: Response<GetProductsResponse>) {
@@ -44,15 +43,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                     Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
                 Log.e("GetCartProducts", t.message.orEmpty())
             }
 
         })
     }
-
     fun onDeleteFromBasket(id: Int) {
-
     }
 }

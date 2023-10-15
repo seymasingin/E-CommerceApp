@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment" >
+    android:background="@color/bej"
+    tools:context=".ui.home.HomeFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -52,5 +53,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:itemCount="5"
+        tools:listitem="@layout/sale_cart" />
 </androidx.constraintlayout.widget.ConstraintLayout>

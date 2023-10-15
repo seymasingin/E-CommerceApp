@@ -14,7 +14,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding by viewBinding(FragmentFavoritesBinding::bind)
 
     private val favAdapter = FavAdapter(onDeleteFromFav = ::onDeleteFromFav)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -24,13 +23,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             rvFav.adapter = favAdapter
         }
     }
-
     fun getFavProducts() {
-        
     }
-
     fun onDeleteFromFav(id: Int) {
-
     }
-
 }

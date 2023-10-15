@@ -41,20 +41,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     }
                 }
                 else {
-
                 }
             }
-
             override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })
     }
-
     private fun onFavClick(id: Int) {
         null
     }
-
     private fun onProductClick(id: Int) {
         findNavController().navigate(SearchFragmentDirections.searchToDetail(id))
     }

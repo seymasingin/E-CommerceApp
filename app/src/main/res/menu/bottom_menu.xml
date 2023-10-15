@@ -5,19 +5,23 @@
         android:id="@+id/homeFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/home_icon" />
+        android:icon="@drawable/home_icon"
+        android:title="" />
     <item
         android:id="@+id/searchFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/search_icon" />
+        android:icon="@drawable/search_icon"
+        android:title="" />
     <item
         android:id="@+id/favoritesFragment"
+        android:title=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/fav_icon" />
     <item
         android:id="@+id/cartFragment"
+        android:title=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/basket_icon" />

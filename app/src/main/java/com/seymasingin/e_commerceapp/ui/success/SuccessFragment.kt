@@ -13,7 +13,6 @@ import com.seymasingin.e_commerceapp.databinding.FragmentSuccessBinding
 class SuccessFragment : Fragment(R.layout.fragment_success) {
 
     private val binding by viewBinding(FragmentSuccessBinding::bind)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

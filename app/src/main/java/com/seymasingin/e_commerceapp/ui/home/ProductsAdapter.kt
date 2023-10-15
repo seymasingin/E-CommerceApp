@@ -13,16 +13,13 @@ class ProductsAdapter(private val onFavClick: (Int) -> Unit,
                       private val onProductClick: (Int) -> Unit) : RecyclerView.Adapter<ProductsAdapter.ProductsHolder>() {
 
     private val productList = ArrayList<Product>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsHolder {
         val binding = HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductsHolder(binding, onFavClick, onProductClick)
     }
-
     override fun onBindViewHolder(holder: ProductsHolder, position: Int) {
         holder.bind(productList[position])
     }
-
     class ProductsHolder(private val binding: HomeCartBinding,
                          private val onFavClick: (Int) -> Unit,
                          private val onProductClick: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root){
@@ -30,13 +27,16 @@ class ProductsAdapter(private val onFavClick: (Int) -> Unit,
             with(binding){
                 productTitle.text = product.title
                 productCat.text = product.category
-                productSale.visibility = View.GONE
+                productPrice.text = "${product.price} £"
                 if (product.saleState == true) {
-                    productSale.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    productPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     productSale.text = "${product.salePrice} £"
                     productSale.visibility = View.VISIBLE
                 }
-                productPrice.text = "${product.price} £"
+                else{
+                    productPrice.paintFlags = 0
+                    productSale.visibility = View.GONE
+                }
                 Glide.with(productImg1).load(product.imageOne).into(productImg1)
                 productFav.setOnClickListener {
                     onFavClick(product.id ?:1)
@@ -47,11 +47,9 @@ class ProductsAdapter(private val onFavClick: (Int) -> Unit,
             }
         }
     }
-
     override fun getItemCount(): Int {
         return productList.size
     }
-
     fun updateList(list: List<Product>){
         productList.clear()
         productList.addAll(list)

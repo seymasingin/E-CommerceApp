@@ -9,15 +9,26 @@ import com.seymasingin.e_commerceapp.R
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.databinding.FragmentSplashBinding
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private val binding by viewBinding(FragmentSplashBinding::bind)
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    Handler(Looper.getMainLooper()).postDelayed({
-        findNavController().navigate(SplashFragmentDirections.splashToHome())
-    }, 3000)
+        auth = FirebaseAuth.getInstance()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (auth.currentUser != null) {
+                findNavController().navigate(SplashFragmentDirections.splashToHome())
+            }
+            else{
+                findNavController().navigate(SplashFragmentDirections.splashToSignIn())
+            }
+        }, 3000)
     }
 }

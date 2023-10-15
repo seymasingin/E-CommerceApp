@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
+    android:backgroundTint="@color/lightbej"
     app:contentPadding="12dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +72,7 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fav_home" >
+            app:srcCompat="@drawable/fav_home">
 
         </ImageView>
 
@@ -81,7 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="9,00"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/productPrice"
             app:layout_constraintEnd_toEndOf="@+id/productPrice" />
     </androidx.constraintlayout.widget.ConstraintLayout>
