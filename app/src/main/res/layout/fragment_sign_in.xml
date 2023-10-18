@@ -48,7 +48,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tilEmail"
         app:layout_constraintVertical_chainStyle="packed"
         app:passwordToggleEnabled="true"
-        app:counterEnabled="true"
         app:startIconDrawable="@drawable/lock_icon">
 
         <com.google.android.material.textfield.TextInputEditText

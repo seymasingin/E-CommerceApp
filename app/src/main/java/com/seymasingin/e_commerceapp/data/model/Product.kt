@@ -1,6 +1,6 @@
 package com.seymasingin.e_commerceapp.data.model
 
-class Product (
+data class Product (
     val id: Int?,
     val title: String?,
     val price: Double?,

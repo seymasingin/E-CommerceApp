@@ -6,14 +6,10 @@ import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.viewBinding
-import com.seymasingin.e_commerceapp.databinding.FragmentSplashBinding
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
-
-    private val binding by viewBinding(FragmentSplashBinding::bind)
 
     private lateinit var auth: FirebaseAuth
 
@@ -25,8 +21,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         Handler(Looper.getMainLooper()).postDelayed({
             if (auth.currentUser != null) {
                 findNavController().navigate(SplashFragmentDirections.splashToHome())
-            }
-            else{
+            } else {
                 findNavController().navigate(SplashFragmentDirections.splashToSignIn())
             }
         }, 3000)

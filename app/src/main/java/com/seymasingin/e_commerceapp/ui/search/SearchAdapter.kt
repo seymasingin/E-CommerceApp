@@ -9,8 +9,10 @@ import com.bumptech.glide.Glide
 import com.seymasingin.e_commerceapp.data.model.Product
 import com.seymasingin.e_commerceapp.databinding.HomeCartBinding
 
-class SearchAdapter(private val onFavClick:(Int) -> Unit,
-                    private val onProductClick:(Int) -> Unit): RecyclerView.Adapter<SearchAdapter.CardHolder>(){
+class SearchAdapter(
+    private val onFavClick: (Int) -> Unit,
+    private val onProductClick: (Int) -> Unit
+) : RecyclerView.Adapter<SearchAdapter.CardHolder>() {
 
     private val productList = ArrayList<Product>()
 
@@ -23,9 +25,12 @@ class SearchAdapter(private val onFavClick:(Int) -> Unit,
         holder.bind(productList[position])
     }
 
-    class CardHolder(private val binding: HomeCartBinding,
-                    private val onFavClick:(Int) -> Unit,
-                    private val onProductClick:(Int) -> Unit): RecyclerView.ViewHolder(binding.root) {
+    class CardHolder(
+        private val binding: HomeCartBinding,
+        private val onFavClick: (Int) -> Unit,
+        private val onProductClick: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(product: Product) {
             with(binding) {
                 productTitle.text = product.title
@@ -39,15 +44,16 @@ class SearchAdapter(private val onFavClick:(Int) -> Unit,
                 productPrice.text = "${product.price} £"
                 Glide.with(productImg1).load(product.imageOne).into(productImg1)
                 productFav.setOnClickListener {
-                    onFavClick(product.id ?:1)
+                    onFavClick(product.id ?: 1)
                 }
                 root.setOnClickListener {
-                    onProductClick(product.id ?:1)
+                    onProductClick(product.id ?: 1)
                 }
             }
         }
     }
+
     override fun getItemCount(): Int {
-       return productList.size
+        return productList.size
     }
 }

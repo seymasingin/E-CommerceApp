@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    android:backgroundTint="@color/lightbej"
-    app:contentPadding="12dp"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/lightbej"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="8dp"
+    app:contentPadding="5dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -64,18 +65,6 @@
             app:layout_constraintStart_toStartOf="@+id/productTitle"
             app:layout_constraintTop_toBottomOf="@+id/productTitle" />
 
-        <ImageView
-            android:id="@+id/productFav"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fav_home">
-
-        </ImageView>
-
         <TextView
             android:id="@+id/productSale"
             android:layout_width="wrap_content"
@@ -86,5 +75,15 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/productPrice"
             app:layout_constraintEnd_toEndOf="@+id/productPrice" />
+
+        <ImageView
+            android:id="@+id/productFav"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/productSale"
+            app:layout_constraintEnd_toEndOf="@+id/productSale"
+            app:srcCompat="@drawable/fav_gray_icon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

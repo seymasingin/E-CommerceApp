@@ -15,7 +15,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private val binding by viewBinding(FragmentCartBinding::bind)
@@ -30,25 +29,31 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             rvCart.adapter = cartAdapter
         }
     }
+
     fun getCartProducts(userId: Int) {
-        MainApplication.productService?.getCartProducts(userId)?.enqueue(object : Callback<GetProductsResponse>{
-            override fun onResponse(call: Call<GetProductsResponse>, response: Response<GetProductsResponse>) {
-                val result = response.body()
-                if (result?.status == 200) {
-                    result.products?.let{
-                        cartAdapter.updateList(it)
+        /*MainApplication.productService?.getCartProducts(userId)
+            ?.enqueue(object : Callback<GetProductsResponse> {
+
+                override fun onResponse(
+                    call: Call<GetProductsResponse>,
+                    response: Response<GetProductsResponse>
+                ) {
+                    val result = response.body()
+                    if (result?.status == 200) {
+                        result.products?.let {
+                            cartAdapter.updateList(it)
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
                     }
                 }
-                else{
-                    Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-            override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
-                Log.e("GetCartProducts", t.message.orEmpty())
-            }
 
-        })
+                override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
+                    Log.e("GetCartProducts", t.message.orEmpty())
+                }
+            })*/
     }
+
     fun onDeleteFromBasket(id: Int) {
     }
 }

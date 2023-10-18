@@ -27,6 +27,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="TITLE"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager2" />
@@ -36,10 +37,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="DESCRIPTION"
-        android:textSize="16sp"
+        android:text="description"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
         android:id="@+id/btnAddCart"
@@ -62,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:text="99"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/titleDetail" />
@@ -74,14 +77,13 @@
         android:layout_marginTop="8dp"
         android:max="5"
         android:progressTint="@color/darkgray"
-        android:rating="3.2"
         app:layout_constraintStart_toStartOf="@+id/titleDetail"
         app:layout_constraintTop_toBottomOf="@+id/titleDetail" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="350dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="75dp"
         android:layout_marginEnd="24dp"
@@ -99,8 +101,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="4.2"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
         app:layout_constraintStart_toEndOf="@+id/ratingBar"
         app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="@+id/priceDetail"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Description"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

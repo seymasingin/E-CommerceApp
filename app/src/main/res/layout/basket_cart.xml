@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:backgroundTintMode="add"
+    android:layout_margin="8dp"
     app:cardBackgroundColor="@color/lightbej"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp"
-    app:contentPadding="10dp"
+    app:contentPadding="5dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -32,16 +31,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/placeholder_icon" />
 
-        <ImageView
-            android:id="@+id/basketDeleteProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/delete_icon" />
-
         <TextView
             android:id="@+id/basketCartPrice"
             android:layout_width="wrap_content"
@@ -58,12 +47,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="TextView"
+            android:text="TITLE"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/basketCartPrice"
             app:layout_constraintStart_toEndOf="@+id/basketCartImage"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/basketDeleteProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            app:backgroundTint="@color/bej"
+            app:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/delete_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
