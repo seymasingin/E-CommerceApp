@@ -5,8 +5,12 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
+import com.seymasingin.e_commerceapp.common.Resource
+import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,14 +39,48 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observeData() {
-        viewModel.productsList.observe(viewLifecycleOwner){ productList ->
-            productAdapter.updateList(productList)
+        viewModel.productsList.observe(viewLifecycleOwner) {
+            when (it) {
+                Resource.Loading -> binding.progressBarAll.visible()
+
+                is Resource.Success -> {
+                    binding.progressBarAll.gone()
+                    productAdapter.updateList(it.data)
+                }
+
+                is Resource.Fail -> {
+                    binding.progressBarAll.gone()
+                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                }
+
+                is Resource.Error -> {
+                    binding.progressBarAll.gone()
+                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                }
+            }
         }
     }
 
     private fun observeSaleData() {
-        viewModel.productsList.observe(viewLifecycleOwner){ productList ->
-            saleAdapter.updateList(productList)
+        viewModel.saleProductsList.observe(viewLifecycleOwner) {
+            when (it) {
+                Resource.Loading -> binding.progressBarSale.visible()
+
+                is Resource.Success -> {
+                    binding.progressBarSale.gone()
+                    saleAdapter.updateList(it.data)
+                }
+
+                is Resource.Fail -> {
+                    binding.progressBarSale.gone()
+                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                }
+
+                is Resource.Error -> {
+                    binding.progressBarSale.gone()
+                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                }
+            }
         }
     }
 

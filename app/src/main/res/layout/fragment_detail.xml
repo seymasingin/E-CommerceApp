@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="TITLE"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -41,7 +41,7 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
     <Button
         android:id="@+id/btnAddCart"
@@ -83,9 +83,9 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="65dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="290dp"
         app:layout_constraintBottom_toTopOf="@+id/btnAddCart"
@@ -110,21 +110,21 @@
         android:id="@+id/count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:text="TextView"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintBottom_toBottomOf="@+id/descriptionDetail"
         app:layout_constraintEnd_toEndOf="@+id/priceDetail"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintTop_toTopOf="@+id/descriptionDetail" />
 
-    <TextView
-        android:id="@+id/textView6"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Description"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewPager2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

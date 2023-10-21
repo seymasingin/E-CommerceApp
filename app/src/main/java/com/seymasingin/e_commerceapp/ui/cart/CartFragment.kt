@@ -1,29 +1,27 @@
 package com.seymasingin.e_commerceapp.ui.cart
 
-
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.seymasingin.e_commerceapp.MainApplication
+import androidx.fragment.app.viewModels
 import com.seymasingin.e_commerceapp.R
 import com.seymasingin.e_commerceapp.common.viewBinding
-import com.seymasingin.e_commerceapp.data.model.GetProductsResponse
 import com.seymasingin.e_commerceapp.databinding.FragmentCartBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private val binding by viewBinding(FragmentCartBinding::bind)
 
+    private val viewModel by viewModels<CartViewModel>()
+
     private val cartAdapter = CartAdapter(onDeleteFromBasket = ::onDeleteFromBasket)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //getCartProducts(userId)
+        viewModel.getCartProducts(userId)
 
         with(binding) {
             rvCart.adapter = cartAdapter

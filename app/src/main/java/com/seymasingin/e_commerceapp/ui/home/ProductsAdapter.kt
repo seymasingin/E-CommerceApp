@@ -15,6 +15,7 @@ class ProductsAdapter(
 ) : RecyclerView.Adapter<ProductsAdapter.ProductsHolder>() {
 
     private val productList = ArrayList<Product>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsHolder {
         val binding = HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductsHolder(binding, onFavClick, onProductClick)

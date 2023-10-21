@@ -12,6 +12,7 @@ class SaleProductsAdapter(private val onSaleClick: (Int) -> Unit) :
     RecyclerView.Adapter<SaleProductsAdapter.SaleHolder>() {
 
     private val saleList = ArrayList<Product>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SaleHolder {
         val binding = SaleCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SaleHolder(binding, onSaleClick)

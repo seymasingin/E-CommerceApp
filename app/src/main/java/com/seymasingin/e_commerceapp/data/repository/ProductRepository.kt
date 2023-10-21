@@ -2,6 +2,7 @@ package com.seymasingin.e_commerceapp.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.data.model.GetProductDetailResponse
 import com.seymasingin.e_commerceapp.data.model.GetProductsResponse
 import com.seymasingin.e_commerceapp.data.model.Product
@@ -12,66 +13,95 @@ import retrofit2.Response
 
 class ProductRepository(private val productService: ProductService) {
 
-    var productsList = MutableLiveData<List<Product>>()
-    var saleProductsList = MutableLiveData<List<Product>>()
+    var productsList = MutableLiveData<Resource<List<Product>>>()
+    var saleProductsList = MutableLiveData<Resource<List<Product>>>()
+    var searchProductsList = MutableLiveData<Resource<List<Product>>>()
+    var productDetail = MutableLiveData<Resource<Product>>()
+    var cartList = MutableLiveData<Resource<List<Product>>>()
 
-    fun getProducts() {
-        productService.getProducts().enqueue(object : Callback<GetProductsResponse> {
-                override fun onResponse(call: Call<GetProductsResponse>, response: Response<GetProductsResponse>) {
-                    val result = response.body()
+    suspend fun getProducts() {
+        productsList.value = Resource.Loading
 
-                    if (result?.status == 200) {
-                        productsList.value = result.products.orEmpty()
-                    } else {
-                        //
-                    }
-                }
+        try {
+            val response = productService.getProducts().body()
 
-                override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
-                    Log.e("GetProducts", t.message.orEmpty())
-                }
-            })
+            productsList.value = if (response?.status == 200) {
+                Resource.Success(response.products.orEmpty())
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            productsList.value = Resource.Error(e.message.orEmpty())
+        }
     }
 
-    fun getSaleProducts() {
-        productService.getSaleProducts().enqueue(object : Callback<GetProductsResponse> {
+    suspend fun getSaleProducts() {
+        saleProductsList.value = Resource.Loading
 
-                override fun onResponse(
-                    call: Call<GetProductsResponse>,
-                    response: Response<GetProductsResponse>
-                ) {
-                    val result = response.body()
+        try {
+            val response = productService.getSaleProducts().body()
 
-                    if (result?.status == 200) {
-                        saleProductsList.value = result.products.orEmpty()
-                    } else {
-                        //Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
-                    Log.e("GetSaleProducts", t.message.orEmpty())
-                }
-            })
+            saleProductsList.value = if (response?.status == 200) {
+                Resource.Success(response.products.orEmpty())
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            saleProductsList.value = Resource.Error(e.message.orEmpty())
+        }
     }
 
-    fun getProductDetail(id: Int) {
-        productService.getProductDetail(id).enqueue(object : Callback<GetProductDetailResponse> {
+    suspend fun getSearchProducts(query: String) {
+        if (query.length >= 3) {
+            searchProductsList.value = Resource.Loading
 
-                override fun onResponse(call: Call<GetProductDetailResponse>, response: Response<GetProductDetailResponse>) {
-                    val result = response.body()
+            try {
+                val response = productService.getSearchProduct(query).body()
 
-                    if (result?.status == 200 && result.product != null) {
-                        val product = result.product
-
-                    } else {
-                        //Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
-                    }
+                searchProductsList.value = if (response?.status == 200) {
+                    Resource.Success(response.products.orEmpty())
+                } else {
+                    Resource.Fail(response?.message.orEmpty())
                 }
+            } catch (e: Exception) {
+                searchProductsList.value = Resource.Error(e.message.orEmpty())
+            }
+        }
+    }
 
-                override fun onFailure(call: Call<GetProductDetailResponse>, t: Throwable) {
-                    Log.e("GetProductDetail", t.message.orEmpty())
-                }
-            })
+    suspend fun getProductDetail(id: Int) {
+        productDetail.value = Resource.Loading
+
+        try {
+            val response = productService.getProductDetail(id).body()
+
+            productDetail.value = if (response?.status == 200) {
+                Resource.Success(response.product!!)
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            productDetail.value = Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun getCartProducts(userId: String) {
+        cartList.value = Resource.Loading
+
+        try {
+            val response = productService.getCartProducts(userId).body()
+
+            cartList.value = if (response?.status == 200) {
+                Resource.Success(response.products.orEmpty())
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        } catch (e: Exception) {
+            cartList.value = Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun addToCart() {
+
     }
 }

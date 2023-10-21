@@ -14,7 +14,7 @@ class SearchAdapter(
     private val onProductClick: (Int) -> Unit
 ) : RecyclerView.Adapter<SearchAdapter.CardHolder>() {
 
-    private val productList = ArrayList<Product>()
+    private val searchList = ArrayList<Product>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         val binding = HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,7 +22,7 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
-        holder.bind(productList[position])
+        holder.bind(searchList[position])
     }
 
     class CardHolder(
@@ -35,13 +35,16 @@ class SearchAdapter(
             with(binding) {
                 productTitle.text = product.title
                 productCat.text = product.category
-                productSale.visibility = View.GONE
+                productPrice.text = "${product.price} £"
                 if (product.saleState == true) {
-                    productSale.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    productPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     productSale.text = "${product.salePrice} £"
                     productSale.visibility = View.VISIBLE
                 }
-                productPrice.text = "${product.price} £"
+                else{
+                    productPrice.paintFlags = 0
+                    productSale.visibility = View.GONE
+                }
                 Glide.with(productImg1).load(product.imageOne).into(productImg1)
                 productFav.setOnClickListener {
                     onFavClick(product.id ?: 1)
@@ -54,6 +57,12 @@ class SearchAdapter(
     }
 
     override fun getItemCount(): Int {
-        return productList.size
+        return searchList.size
+    }
+
+    fun updateList(list: List<Product>) {
+        searchList.clear()
+        searchList.addAll(list)
+        notifyDataSetChanged()
     }
 }
