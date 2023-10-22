@@ -1,15 +1,12 @@
 package com.seymasingin.e_commerceapp.data.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.data.model.GetProductDetailResponse
-import com.seymasingin.e_commerceapp.data.model.GetProductsResponse
+import com.seymasingin.e_commerceapp.data.model.AddToCartRequest
+import com.seymasingin.e_commerceapp.data.model.ClearCartRequest
+import com.seymasingin.e_commerceapp.data.model.DeleteFromCartRequest
 import com.seymasingin.e_commerceapp.data.model.Product
 import com.seymasingin.e_commerceapp.data.source.remote.ProductService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProductRepository(private val productService: ProductService) {
 
@@ -101,7 +98,51 @@ class ProductRepository(private val productService: ProductService) {
         }
     }
 
-    suspend fun addToCart() {
+    suspend fun addToCart(userId: String, productId: Int) {
+        try {
+            val addToCartRequest = AddToCartRequest(userId, productId)
+            val response = productService.addToCart(addToCartRequest).body()
 
+            if (response?.status == 200) {
+                Resource.Success(response.message.orEmpty())
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        }
+        catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun deleteFromCart(id: Int) {
+        try {
+            val deleteFromCartRequest = DeleteFromCartRequest(id)
+            val response = productService.deleteFromCart(deleteFromCartRequest).body()
+
+            if (response?.status == 200) {
+                Resource.Success(response.message.orEmpty())
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        }
+        catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
+    }
+
+    suspend fun clearCart(userId: String) {
+        try {
+            val clearCartRequest = ClearCartRequest(userId)
+            val response = productService.clearCart(clearCartRequest).body()
+
+            if(response?.status == 200){
+                Resource.Success(response.message.orEmpty())
+            } else{
+                Resource.Fail(response?.message.orEmpty())
+            }
+        }
+        catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
+        }
     }
 }

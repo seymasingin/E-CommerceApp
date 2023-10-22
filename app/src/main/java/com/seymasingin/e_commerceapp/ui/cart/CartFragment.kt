@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
+import com.seymasingin.e_commerceapp.common.Resource
+import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentCartBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,37 +25,44 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val userId = viewModel.userId
+
         viewModel.getCartProducts(userId)
 
         with(binding) {
             rvCart.adapter = cartAdapter
+            clearBasket.setOnClickListener {
+                viewModel.clearCart(userId)
+            }
+        }
+
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.cartList.observe(viewLifecycleOwner) {
+            when (it) {
+                Resource.Loading -> binding.progressBarCart.visible()
+
+                is Resource.Success -> {
+                    binding.progressBarCart.gone()
+                    cartAdapter.updateList(it.data)
+                }
+
+                is Resource.Fail -> {
+                    binding.progressBarCart.gone()
+                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                }
+
+                is Resource.Error -> {
+                    binding.progressBarCart.gone()
+                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                }
+            }
         }
     }
 
-    fun getCartProducts(userId: Int) {
-        /*MainApplication.productService?.getCartProducts(userId)
-            ?.enqueue(object : Callback<GetProductsResponse> {
-
-                override fun onResponse(
-                    call: Call<GetProductsResponse>,
-                    response: Response<GetProductsResponse>
-                ) {
-                    val result = response.body()
-                    if (result?.status == 200) {
-                        result.products?.let {
-                            cartAdapter.updateList(it)
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), result?.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<GetProductsResponse>, t: Throwable) {
-                    Log.e("GetCartProducts", t.message.orEmpty())
-                }
-            })*/
-    }
-
     fun onDeleteFromBasket(id: Int) {
+        viewModel.deleteFromCart(id)
     }
 }

@@ -49,9 +49,9 @@ interface ProductService {
     fun getCategories(): Call<GetCategories>
 
     @POST("delete_from_cart.php")
-    fun deleteFromCart(
+    suspend fun deleteFromCart(
         @Body deleteFromCartRequest: DeleteFromCartRequest
-    ): Call<DeleteFromCartResponse>
+    ): Response<DeleteFromCartResponse>
 
     @POST("add_to_cart.php")
     suspend fun addToCart(
@@ -59,7 +59,7 @@ interface ProductService {
     ): Response<AddToCartResponse>
 
     @POST("clear_cart.php")
-    fun clearCart(
+    suspend fun clearCart(
         @Body clearCartRequest: ClearCartRequest
-    ): Call<ClearCartResponse>
+    ): Response<ClearCartResponse>
 }

@@ -12,6 +12,7 @@ import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentDetailBinding
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +30,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.getProductDetail(args.id)
 
         observeData()
+
+        with(binding) {
+            btnAddCart.setOnClickListener {
+                val userId = viewModel.userId
+                viewModel.addToCart(userId, args.id)
+            }
+
+            fabBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+        }
     }
 
     private fun observeData() {
@@ -46,19 +58,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         count.text = "${product.count} pieces left"
                         ratingBar.rating = product.rate?.toFloat()!!
                         star.text = product.rate.toString()
-                        btnAddCart.setOnClickListener {
-                            viewModel.
-                        }
-
-                        fabBack.setOnClickListener {
-                            requireActivity().onBackPressedDispatcher.onBackPressed()
-                        }
 
                         val images = listOf(product.imageOne, product.imageTwo, product.imageThree)
                         val imageAdapter = ImageAdapter(images)
                         viewPager2.adapter = imageAdapter
                     }
-
                 }
 
                 is Resource.Fail -> {
