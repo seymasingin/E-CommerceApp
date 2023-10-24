@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.common.visible
@@ -20,7 +20,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private val viewModel by viewModels<CartViewModel>()
 
-    private val cartAdapter = CartAdapter(onDeleteFromBasket = ::onDeleteFromBasket)
+    private val cartAdapter = CartAdapter(onDeleteFromBasket = ::onDeleteFromBasket, onProductClick = ::onProductClick)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,30 +39,36 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         observeData()
     }
 
-    private fun observeData() {
-        viewModel.cartList.observe(viewLifecycleOwner) {
-            when (it) {
-                Resource.Loading -> binding.progressBarCart.visible()
+    private fun observeData() = with(binding) {
+        viewModel.cartState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                HomeState.Loading -> progressBarCart.visible()
 
-                is Resource.Success -> {
-                    binding.progressBarCart.gone()
-                    cartAdapter.updateList(it.data)
+                is HomeState.SuccessState -> {
+                    progressBarCart.gone()
+                    cartAdapter.updateList(state.products)
                 }
 
-                is Resource.Fail -> {
-                    binding.progressBarCart.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                is HomeState.EmptyScreen -> {
+                    progressBarCart.gone()
+                    icCartEmpty.visible()
+                    tvCartEmpty.visible()
+                    tvCartEmpty.text = state.failMessage
                 }
 
-                is Resource.Error -> {
-                    binding.progressBarCart.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                is HomeState.ShowPopUp -> {
+                    progressBarCart.gone()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
         }
     }
 
-    fun onDeleteFromBasket(id: Int) {
+    private fun onDeleteFromBasket(id: Int) {
         viewModel.deleteFromCart(id)
+    }
+
+    private fun onProductClick(id: Int) {
+        findNavController().navigate(CartFragmentDirections.cartToDetail(id))
     }
 }

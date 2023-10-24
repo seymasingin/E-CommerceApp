@@ -64,11 +64,12 @@
             app:srcCompat="@drawable/delete_icon" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/salePriceFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:text="TextView"
+            android:textColor="@color/red"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/favPrice"
             app:layout_constraintStart_toEndOf="@+id/favPrice"

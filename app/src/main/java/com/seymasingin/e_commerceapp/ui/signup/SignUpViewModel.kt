@@ -11,8 +11,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    private var _isSignUp = MutableLiveData<Resource<Boolean>>()
-    val isSignUp: LiveData<Resource<Boolean>> get() = _isSignUp
+    private var _isSignUp = MutableLiveData<Boolean>()
+    val isSignUp: LiveData<Boolean> get() = _isSignUp
 
     init{
         _isSignUp = userRepository.isSignUp

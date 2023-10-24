@@ -59,6 +59,27 @@
         tools:itemCount="5"
         tools:listitem="@layout/sale_cart" />
 
+    <ImageView
+        android:id="@+id/logOut"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/logout_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Log Out"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/logOut"
+        app:layout_constraintEnd_toStartOf="@+id/logOut"
+        app:layout_constraintTop_toTopOf="@+id/logOut" />
+
     <ProgressBar
         android:id="@+id/progressBarSale"
         style="?android:attr/progressBarStyle"
@@ -66,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
         android:layout_marginEnd="180dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rvSaleProducts"
         app:layout_constraintEnd_toEndOf="@+id/rvSaleProducts"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,8 +100,33 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
         android:layout_marginEnd="180dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rvAllProducts"
         app:layout_constraintStart_toStartOf="@+id/rvAllProducts"
         app:layout_constraintTop_toTopOf="@+id/rvAllProducts" />
+
+    <ImageView
+        android:id="@+id/emptyWarning"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/warning_icon"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/rvAllProducts"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/rvAllProducts"
+        tools:layout_editor_absoluteY="299dp" />
+
+    <TextView
+        android:id="@+id/emptyWarnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="WARNING"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/emptyWarning"
+        app:layout_constraintStart_toStartOf="@+id/emptyWarning"
+        app:layout_constraintTop_toBottomOf="@+id/emptyWarning" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.common.visible
@@ -33,52 +32,58 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         with(binding) {
             rvAllProducts.adapter = productAdapter
             rvSaleProducts.adapter = saleAdapter
+            logOut.setOnClickListener{
+                viewModel.logOut()
+                findNavController().navigate(R.id.homeToSignIn)
+            }
         }
         observeData()
         observeSaleData()
     }
 
-    private fun observeData() {
-        viewModel.productsList.observe(viewLifecycleOwner) {
-            when (it) {
-                Resource.Loading -> binding.progressBarAll.visible()
+    private fun observeData() = with(binding) {
+        viewModel.productState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                HomeState.Loading -> progressBarAll.visible()
 
-                is Resource.Success -> {
-                    binding.progressBarAll.gone()
-                    productAdapter.updateList(it.data)
+                is HomeState.SuccessState -> {
+                    progressBarAll.gone()
+                    productAdapter.updateList(state.products)
                 }
 
-                is Resource.Fail -> {
-                    binding.progressBarAll.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                is HomeState.EmptyScreen -> {
+                    progressBarAll.gone()
+                    emptyWarning.visible()
+                    emptyWarnText.visible()
+                    emptyWarnText.text = state.failMessage
                 }
 
-                is Resource.Error -> {
-                    binding.progressBarAll.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                is HomeState.ShowPopUp -> {
+                    progressBarAll.gone()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
         }
     }
 
-    private fun observeSaleData() {
-        viewModel.saleProductsList.observe(viewLifecycleOwner) {
-            when (it) {
-                Resource.Loading -> binding.progressBarSale.visible()
+    private fun observeSaleData() = with(binding) {
+        viewModel.saleProductsState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                HomeState.Loading -> binding.progressBarSale.visible()
 
-                is Resource.Success -> {
-                    binding.progressBarSale.gone()
-                    saleAdapter.updateList(it.data)
+                is HomeState.SuccessState -> {
+                    progressBarSale.gone()
+                    saleAdapter.updateList(state.products)
                 }
 
-                is Resource.Fail -> {
-                    binding.progressBarSale.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                is HomeState.EmptyScreen -> {
+                    progressBarSale.gone()
+                    ////
                 }
 
-                is Resource.Error -> {
-                    binding.progressBarSale.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                is HomeState.ShowPopUp -> {
+                    progressBarSale.gone()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
         }

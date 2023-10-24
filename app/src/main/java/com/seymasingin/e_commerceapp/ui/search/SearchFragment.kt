@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.common.visible
@@ -36,7 +35,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText != null) {
-                        viewModel.getSearchProducts(newText)
+                        if (newText.length >= 3) {
+                            viewModel.getSearchProducts(newText)
+                        }
                     }
                     return true
                 }
@@ -47,24 +48,26 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         observeData()
     }
 
-    private fun observeData() {
-        viewModel.searchProductsList.observe(viewLifecycleOwner){
-            when (it) {
-                Resource.Loading -> binding.progressBarSearch.visible()
+    private fun observeData() = with(binding) {
+        viewModel.searchState.observe(viewLifecycleOwner){ state ->
+            when (state) {
+                HomeState.Loading -> progressBarSearch.visible()
 
-                is Resource.Success -> {
-                    binding.progressBarSearch.gone()
-                    searchAdapter.updateList(it.data)
+                is HomeState.SuccessState -> {
+                    progressBarSearch.gone()
+                    searchAdapter.updateList(state.products)
                 }
 
-                is Resource.Fail -> {
-                    binding.progressBarSearch.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                is HomeState.EmptyScreen -> {
+                    progressBarSearch.gone()
+                    icSearchEmpty.visible()
+                    tvSearchEmpty.visible()
+                    tvSearchEmpty.text = state.failMessage
                 }
 
-                is Resource.Error -> {
-                    binding.progressBarSearch.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                is HomeState.ShowPopUp -> {
+                    progressBarSearch.gone()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
         }

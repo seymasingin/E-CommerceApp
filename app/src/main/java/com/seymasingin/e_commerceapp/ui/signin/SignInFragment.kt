@@ -9,10 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
-import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentSignInBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,31 +47,17 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         observeData()
     }
 
-    fun observeData() {
-        viewModel.isSignIn.observe(viewLifecycleOwner){
-            when(it) {
-
-                Resource.Loading -> binding.progressBarSignIn.visible()
-
-                is Resource.Success -> {
-                    binding.progressBarSignIn.gone()
-                    findNavController().navigate(R.id.signInToHome)
-                }
-
-                is Resource.Fail -> {
-                    binding.progressBarSignIn.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
-                }
-
-                is Resource.Error -> {
-                    binding.progressBarSignIn.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
-                }
+    private fun observeData() {
+        viewModel.isSignIn.observe(viewLifecycleOwner){ isSignIn ->
+            if (isSignIn) {
+                findNavController().navigate(R.id.signInToHome)
+            } else {
+                Snackbar.make(requireView(), "Sign-in failed!", 1000).show()
             }
         }
     }
 
-    fun checkFields(email: String, password: String): Boolean {
+    private fun checkFields(email: String, password: String): Boolean {
         return when {
             Patterns.EMAIL_ADDRESS.matcher(email).matches().not() -> {
                 binding.tilEmail.error = "E-Mail is not valid!"

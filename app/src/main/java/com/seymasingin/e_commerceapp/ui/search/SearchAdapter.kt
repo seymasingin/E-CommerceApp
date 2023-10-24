@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.seymasingin.e_commerceapp.data.model.Product
+import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
 import com.seymasingin.e_commerceapp.databinding.HomeCartBinding
 
 class SearchAdapter(
@@ -14,7 +14,7 @@ class SearchAdapter(
     private val onProductClick: (Int) -> Unit
 ) : RecyclerView.Adapter<SearchAdapter.CardHolder>() {
 
-    private val searchList = ArrayList<Product>()
+    private val searchList = ArrayList<ProductListUI>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         val binding = HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,7 +31,7 @@ class SearchAdapter(
         private val onProductClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: Product) {
+        fun bind(product: ProductListUI) {
             with(binding) {
                 productTitle.text = product.title
                 productCat.text = product.category
@@ -60,7 +60,7 @@ class SearchAdapter(
         return searchList.size
     }
 
-    fun updateList(list: List<Product>) {
+    fun updateList(list: List<ProductListUI>) {
         searchList.clear()
         searchList.addAll(list)
         notifyDataSetChanged()

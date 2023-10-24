@@ -1,15 +1,15 @@
 package com.seymasingin.e_commerceapp.data.source.remote
 
-import com.seymasingin.e_commerceapp.data.model.AddToCartRequest
-import com.seymasingin.e_commerceapp.data.model.AddToCartResponse
-import com.seymasingin.e_commerceapp.data.model.ClearCartRequest
-import com.seymasingin.e_commerceapp.data.model.ClearCartResponse
-import com.seymasingin.e_commerceapp.data.model.DeleteFromCartRequest
-import com.seymasingin.e_commerceapp.data.model.DeleteFromCartResponse
-import com.seymasingin.e_commerceapp.data.model.GetCartProductsResponse
-import com.seymasingin.e_commerceapp.data.model.GetCategories
-import com.seymasingin.e_commerceapp.data.model.GetProductDetailResponse
-import com.seymasingin.e_commerceapp.data.model.GetProductsResponse
+import com.seymasingin.e_commerceapp.data.model.request.AddToCartRequest
+import com.seymasingin.e_commerceapp.data.model.response.AddToCartResponse
+import com.seymasingin.e_commerceapp.data.model.request.ClearCartRequest
+import com.seymasingin.e_commerceapp.data.model.response.ClearCartResponse
+import com.seymasingin.e_commerceapp.data.model.request.DeleteFromCartRequest
+import com.seymasingin.e_commerceapp.data.model.response.DeleteFromCartResponse
+import com.seymasingin.e_commerceapp.data.model.response.GetCartProductsResponse
+import com.seymasingin.e_commerceapp.data.model.response.GetCategoriesResponse
+import com.seymasingin.e_commerceapp.data.model.response.GetProductDetailResponse
+import com.seymasingin.e_commerceapp.data.model.response.GetProductsResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -46,7 +46,7 @@ interface ProductService {
     ): Call<GetProductsResponse>
 
     @GET("get_categories")
-    fun getCategories(): Call<GetCategories>
+    fun getCategories(): Call<GetCategoriesResponse>
 
     @POST("delete_from_cart.php")
     suspend fun deleteFromCart(

@@ -3,8 +3,11 @@
     <style name="Base.Theme.ECommerceApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textViewStyle">@style/MyTextView</item>
     </style>
-
     <style name="Theme.ECommerceApp" parent="Base.Theme.ECommerceApp" />
-
+    <style name="MyTextView" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/prompt_light</item>
+    </style>
 </resources>

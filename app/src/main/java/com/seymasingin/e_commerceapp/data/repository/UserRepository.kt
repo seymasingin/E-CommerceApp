@@ -6,30 +6,30 @@ import com.seymasingin.e_commerceapp.common.Resource
 
 class UserRepository {
 
-    var isSignIn = MutableLiveData<Resource<Boolean>>()
+    var isSignIn = MutableLiveData<Boolean>()
 
-    var isSignUp = MutableLiveData<Resource<Boolean>>()
+    var isSignUp = MutableLiveData<Boolean>()
 
     private var auth = FirebaseAuth.getInstance()
 
     fun signUp(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            isSignUp.value = Resource.Success(true)
-        }.addOnFailureListener { e->
-            isSignUp.value = Resource.Error(e.message.orEmpty())
+            isSignUp.value = true
+        }.addOnFailureListener {
+            isSignUp.value = false
         }
     }
 
     fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            isSignIn.value = Resource.Success(true)
-        }.addOnFailureListener { e->
-            isSignIn.value = Resource.Error(e.message.orEmpty())
+            isSignIn.value = true
+        }.addOnFailureListener {
+            isSignIn.value = false
         }
     }
 
-    fun signOut() {
-
+    fun logOut() {
+        auth.signOut()
     }
 
     fun getUserId(): String = auth.currentUser?.uid.orEmpty()

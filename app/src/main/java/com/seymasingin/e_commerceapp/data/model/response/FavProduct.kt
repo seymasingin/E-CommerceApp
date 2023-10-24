@@ -1,4 +1,4 @@
-package com.seymasingin.e_commerceapp.data.model
+package com.seymasingin.e_commerceapp.data.model.response
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

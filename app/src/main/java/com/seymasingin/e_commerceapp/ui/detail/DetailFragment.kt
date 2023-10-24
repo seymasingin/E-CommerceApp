@@ -1,18 +1,18 @@
 package com.seymasingin.e_commerceapp.ui.detail
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentDetailBinding
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,36 +43,42 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun observeData() {
-        viewModel.productDetail.observe(viewLifecycleOwner){
-            when (it) {
-                Resource.Loading -> binding.progressBar.visible()
+    private fun observeData() = with(binding) {
+        viewModel.detailState.observe(viewLifecycleOwner){ state ->
+            when (state) {
+                DetailState.Loading -> progressBar.visible()
 
-                is Resource.Success -> {
-                    val product = it.data
-                    with(binding) {
-                        progressBar.gone()
-                        titleDetail.text = product.title
-                        descriptionDetail.text = product.description
-                        priceDetail.text = "${product.price} £"
-                        count.text = "${product.count} pieces left"
-                        ratingBar.rating = product.rate?.toFloat()!!
-                        star.text = product.rate.toString()
-
-                        val images = listOf(product.imageOne, product.imageTwo, product.imageThree)
-                        val imageAdapter = ImageAdapter(images)
-                        viewPager2.adapter = imageAdapter
+                is DetailState.SuccessState -> {
+                    progressBar.gone()
+                    titleDetail.text = state.product.title
+                    descriptionDetail.text = state.product.description
+                    priceDetail.text = "${state.product.price} £"
+                    if(state.product.saleState == true){
+                        priceDetail.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                        salePriceDetail.text = "${state.product.salePrice} £"
+                        salePriceDetail.visibility = View.VISIBLE
+                    } else {
+                        priceDetail.paintFlags = 0
+                        salePriceDetail.visibility = View.GONE
                     }
+                    count.text = "${state.product.count} pieces left"
+                    category.text = state.product.category
+                    ratingBar.rating = state.product.rate.toFloat()
+                    starNumber.text = state.product.rate.toString()
+
+                    val images = listOf(state.product.imageOne, state.product.imageTwo, state.product.imageThree)
+                    val imageAdapter = ImageAdapter(images)
+                    viewPager2.adapter = imageAdapter
                 }
 
-                is Resource.Fail -> {
+                is DetailState.EmptyScreen -> {
                     binding.progressBar.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
+                    ///
                 }
 
-                is Resource.Error -> {
+                is DetailState.ShowPopUp -> {
                     binding.progressBar.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
         }

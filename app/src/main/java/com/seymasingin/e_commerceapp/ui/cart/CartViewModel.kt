@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.data.model.Product
+import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,17 +16,19 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(private val productRepository: ProductRepository,
                                         private val userRepository: UserRepository) : ViewModel() {
 
-    private var _cartList = MutableLiveData<Resource<List<Product>>>()
-    val cartList: LiveData<Resource<List<Product>>> get() = _cartList
+    private var _cartState = MutableLiveData<HomeState>()
+    val cartState: LiveData<HomeState> get() = _cartState
 
     val userId = userRepository.getUserId()
 
-    init {
-        _cartList = productRepository.cartList
-    }
-
     fun getCartProducts(userId: String) = viewModelScope.launch {
-        productRepository.getCartProducts(userId)
+        _cartState.value = HomeState.Loading
+
+        _cartState.value = when (val result = productRepository.getCartProducts(userId) ){
+            is Resource.Success -> HomeState.SuccessState(result.data)
+            is Resource.Fail -> HomeState.EmptyScreen(result.failMessage)
+            is Resource.Error -> HomeState.ShowPopUp(result.errorMessage)
+        }
     }
 
     fun deleteFromCart(id: Int) = viewModelScope.launch {
@@ -36,4 +38,11 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     fun clearCart(userId: String) = viewModelScope.launch {
         productRepository.clearCart(userId)
     }
+}
+
+sealed interface HomeState {
+    object Loading : HomeState
+    data class SuccessState(val products: List<ProductListUI>) : HomeState
+    data class EmptyScreen(val failMessage: String) : HomeState
+    data class ShowPopUp(val errorMessage: String) : HomeState
 }

@@ -9,10 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.seymasingin.e_commerceapp.R
-import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
-import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,24 +42,11 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun observeData() {
-        viewModel.isSignUp.observe(viewLifecycleOwner){
-            when(it) {
-                Resource.Loading -> binding.progressBarSignUp.visible()
-
-                is Resource.Success -> {
-                    binding.progressBarSignUp.gone()
-                    findNavController().navigate(R.id.signUpToHome)
-                }
-
-                is Resource.Fail -> {
-                    binding.progressBarSignUp.gone()
-                    Snackbar.make(requireView(), it.failMessage, 1000).show()
-                }
-
-                is Resource.Error -> {
-                    binding.progressBarSignUp.gone()
-                    Snackbar.make(requireView(), it.errorMessage, 1000).show()
-                }
+        viewModel.isSignUp.observe(viewLifecycleOwner){ isSignUp ->
+            if (isSignUp) {
+                findNavController().navigate(R.id.signUpToHome)
+            } else {
+                Snackbar.make(requireView(), "Sign-in failed!", 1000).show()
             }
         }
     }

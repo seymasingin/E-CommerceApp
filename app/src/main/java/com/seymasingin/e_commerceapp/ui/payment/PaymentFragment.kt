@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.databinding.FragmentPaymentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     private val binding by viewBinding(FragmentPaymentBinding::bind)
+
+    private val viewModel by viewModels<PaymentViewModel>()
 
     private val monthList =
         listOf("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
@@ -19,6 +25,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val userId = viewModel.userId
 
         val monthAdapter = ArrayAdapter(requireContext(), R.layout.fragment_payment, monthList)
         binding.etMonth.setAdapter(monthAdapter)
@@ -42,8 +50,14 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 yearList[position]
             }
 
-            if (checkFields(number, name, cvc, city, town, address)) {
-                findNavController().navigate(PaymentFragmentDirections.paymentToSuccess())
+            buy.setOnClickListener {
+                if (checkFields(number, name, cvc, city, town, address)) {
+                    viewModel.clearCart(userId)
+                    findNavController().navigate(PaymentFragmentDirections.paymentToSuccess())
+                }
+                else {
+                    Snackbar.make(requireView(), "Fill in the required blanks", 1000).show()
+                }
             }
         }
     }
