@@ -15,10 +15,8 @@ class SuccessFragment : Fragment(R.layout.fragment_success) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            btnBackHome.setOnClickListener {
-                findNavController().navigate(SuccessFragmentDirections.successsToHome())
-            }
+        binding.btnBackHome.setOnClickListener {
+            findNavController().navigate(SuccessFragmentDirections.successsToHome())
         }
     }
 }

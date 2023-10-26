@@ -1,30 +1,34 @@
 package com.seymasingin.e_commerceapp.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.seymasingin.e_commerceapp.common.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class UserRepository {
 
-    var isSignIn = MutableLiveData<Boolean>()
-
-    var isSignUp = MutableLiveData<Boolean>()
-
     private var auth = FirebaseAuth.getInstance()
 
-    fun signUp(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            isSignUp.value = true
-        }.addOnFailureListener {
-            isSignUp.value = false
+    suspend fun signUp(email: String, password: String): Resource<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+                Resource.Success(true)
+            } catch (e: Exception) {
+                Resource.Error("An error occurred during sign up: ${e.message}")
+            }
         }
     }
 
-    fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            isSignIn.value = true
-        }.addOnFailureListener {
-            isSignIn.value = false
+    suspend fun signIn(email: String, password: String): Resource<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val authResult = auth.signInWithEmailAndPassword(email, password).await()
+                Resource.Success(true)
+            } catch (e: Exception) {
+                Resource.Error("An error occurred during sign in: ${e.message}")
+            }
         }
     }
 

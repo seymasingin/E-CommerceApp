@@ -42,29 +42,45 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun observeData() = with(binding) {
         viewModel.cartState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                HomeState.Loading -> progressBarCart.visible()
+                CartState.Loading -> progressBarCart.visible()
 
-                is HomeState.SuccessState -> {
+                is CartState.SuccessState -> {
                     progressBarCart.gone()
                     cartAdapter.updateList(state.products)
                 }
 
-                is HomeState.EmptyScreen -> {
+                is CartState.EmptyScreen -> {
                     progressBarCart.gone()
                     icCartEmpty.visible()
                     tvCartEmpty.visible()
                     tvCartEmpty.text = state.failMessage
                 }
 
-                is HomeState.ShowPopUp -> {
+                is CartState.ShowPopUp -> {
                     progressBarCart.gone()
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
         }
+
+        viewModel.productDeleteState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                is DeleteState.DeleteSuccess -> {
+                    Snackbar.make(requireView(), state.successMessage, 1000).show()
+                }
+            }
+        }
+
+        viewModel.clearCartState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                is DeleteState.DeleteSuccess -> {
+                    Snackbar.make(requireView(), state.successMessage, 1000).show()
+                }
+            }
+        }
     }
 
-    private fun onDeleteFromBasket(id: Int) {
+    private fun onDeleteFromBasket(id: Int){
         viewModel.deleteFromCart(id)
     }
 

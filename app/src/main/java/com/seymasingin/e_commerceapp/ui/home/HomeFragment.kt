@@ -38,7 +38,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
         observeData()
-        observeSaleData()
     }
 
     private fun observeData() = with(binding) {
@@ -64,9 +63,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
-    }
 
-    private fun observeSaleData() = with(binding) {
         viewModel.saleProductsState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 HomeState.Loading -> binding.progressBarSale.visible()

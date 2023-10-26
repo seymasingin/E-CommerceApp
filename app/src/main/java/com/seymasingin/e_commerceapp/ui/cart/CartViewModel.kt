@@ -16,33 +16,50 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(private val productRepository: ProductRepository,
                                         private val userRepository: UserRepository) : ViewModel() {
 
-    private var _cartState = MutableLiveData<HomeState>()
-    val cartState: LiveData<HomeState> get() = _cartState
+    private var _cartState = MutableLiveData<CartState>()
+    val cartState: LiveData<CartState> get() = _cartState
+
+    private var _productDeleteState = MutableLiveData<DeleteState>()
+    val productDeleteState: LiveData<DeleteState> get() = _productDeleteState
+
+    private var _clearCartState = MutableLiveData<DeleteState>()
+    val clearCartState: LiveData<DeleteState> get() = _clearCartState
 
     val userId = userRepository.getUserId()
 
     fun getCartProducts(userId: String) = viewModelScope.launch {
-        _cartState.value = HomeState.Loading
+        _cartState.value = CartState.Loading
 
         _cartState.value = when (val result = productRepository.getCartProducts(userId) ){
-            is Resource.Success -> HomeState.SuccessState(result.data)
-            is Resource.Fail -> HomeState.EmptyScreen(result.failMessage)
-            is Resource.Error -> HomeState.ShowPopUp(result.errorMessage)
+            is Resource.Success -> CartState.SuccessState(result.data)
+            is Resource.Fail -> CartState.EmptyScreen(result.failMessage)
+            is Resource.Error -> CartState.ShowPopUp(result.errorMessage)
         }
     }
 
     fun deleteFromCart(id: Int) = viewModelScope.launch {
-        productRepository.deleteFromCart(id)
+        val result = productRepository.deleteFromCart(id)
+        if (result is Resource.Success) {
+            _productDeleteState.value = DeleteState.DeleteSuccess(result.data)
+        }
     }
 
     fun clearCart(userId: String) = viewModelScope.launch {
-        productRepository.clearCart(userId)
+        val result = productRepository.clearCart(userId)
+        if(result is Resource.Success) {
+            _clearCartState.value = DeleteState.DeleteSuccess(result.data)
+        }
+        getCartProducts(userId)
     }
 }
 
-sealed interface HomeState {
-    object Loading : HomeState
-    data class SuccessState(val products: List<ProductListUI>) : HomeState
-    data class EmptyScreen(val failMessage: String) : HomeState
-    data class ShowPopUp(val errorMessage: String) : HomeState
+sealed interface CartState {
+    object Loading : CartState
+    data class SuccessState(val products: List<ProductListUI>) : CartState
+    data class EmptyScreen(val failMessage: String) : CartState
+    data class ShowPopUp(val errorMessage: String) : CartState
+}
+
+sealed interface DeleteState {
+    data class DeleteSuccess(val successMessage: String) : DeleteState
 }

@@ -93,7 +93,9 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/signInToHome"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/signInToSignUp"
             app:destination="@id/signUpFragment" />
@@ -105,6 +107,8 @@
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/signUpToHome"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

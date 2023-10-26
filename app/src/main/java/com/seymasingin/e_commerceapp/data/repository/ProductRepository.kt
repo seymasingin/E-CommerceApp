@@ -91,9 +91,21 @@ class ProductRepository(private val productService: ProductService) {
 
     suspend fun addToCart(userId: String, productId: Int): Resource<String> =
         withContext(Dispatchers.IO) {
+            val addToCartRequest = AddToCartRequest(userId, productId)
+            val response = productService.addToCart(addToCartRequest).body()
+
+            if (response?.status == 200) {
+                Resource.Success(response.message.orEmpty())
+            } else {
+                Resource.Fail(response?.message.orEmpty())
+            }
+        }
+
+    suspend fun deleteFromCart(id: Int): Resource<String> =
+        withContext(Dispatchers.IO){
             try {
-                val addToCartRequest = AddToCartRequest(userId, productId)
-                val response = productService.addToCart(addToCartRequest).body()
+                val deleteFromCartRequest = DeleteFromCartRequest(id)
+                val response = productService.deleteFromCart(deleteFromCartRequest).body()
 
                 if (response?.status == 200) {
                     Resource.Success(response.message.orEmpty())
@@ -106,35 +118,20 @@ class ProductRepository(private val productService: ProductService) {
             }
         }
 
-    suspend fun deleteFromCart(id: Int) {
-        try {
-            val deleteFromCartRequest = DeleteFromCartRequest(id)
-            val response = productService.deleteFromCart(deleteFromCartRequest).body()
+    suspend fun clearCart(userId: String): Resource<String> =
+        withContext(Dispatchers.IO){
+            try {
+                val clearCartRequest = ClearCartRequest(userId)
+                val response = productService.clearCart(clearCartRequest).body()
 
-            if (response?.status == 200) {
-                Resource.Success(response.message.orEmpty())
-            } else {
-                Resource.Fail(response?.message.orEmpty())
+                if(response?.status == 200){
+                    Resource.Success(response.message.orEmpty())
+                } else{
+                    Resource.Fail(response?.message.orEmpty())
+                }
+            }
+            catch (e: Exception) {
+                Resource.Error(e.message.orEmpty())
             }
         }
-        catch (e: Exception) {
-            Resource.Error(e.message.orEmpty())
-        }
-    }
-
-    suspend fun clearCart(userId: String) {
-        try {
-            val clearCartRequest = ClearCartRequest(userId)
-            val response = productService.clearCart(clearCartRequest).body()
-
-            if(response?.status == 200){
-                Resource.Success(response.message.orEmpty())
-            } else{
-                Resource.Fail(response?.message.orEmpty())
-            }
-        }
-        catch (e: Exception) {
-            Resource.Error(e.message.orEmpty())
-        }
-    }
 }

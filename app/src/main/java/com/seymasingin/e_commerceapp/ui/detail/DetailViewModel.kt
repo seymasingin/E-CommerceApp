@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.data.model.response.Product
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
@@ -15,10 +14,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel  @Inject constructor(private val productRepository: ProductRepository,
-                                            private val userRepository: UserRepository) : ViewModel() {
+                                            userRepository: UserRepository) : ViewModel() {
 
     private var _detailState = MutableLiveData<DetailState>()
     val detailState: LiveData<DetailState> get() = _detailState
+
+    private var _addCartState = MutableLiveData<AddCartState>()
+    val addCartState: LiveData<AddCartState> get() = _addCartState
 
     val userId = userRepository.getUserId()
 
@@ -33,7 +35,13 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
     }
 
     fun addToCart(userId: String, productId: Int) = viewModelScope.launch {
-        productRepository.addToCart(userId, productId)
+        val result = productRepository.addToCart(userId, productId)
+        if (result is Resource.Success) {
+            _addCartState.value = AddCartState.CartAddSuccess(result.data)
+        }
+        if (result is Resource.Fail){
+            _addCartState.value = AddCartState.CartAddFail(result.failMessage)
+        }
     }
 }
 
@@ -42,4 +50,9 @@ sealed interface DetailState {
     data class SuccessState(val product: ProductUI) : DetailState
     data class EmptyScreen(val failMessage: String) : DetailState
     data class ShowPopUp(val errorMessage: String) : DetailState
+}
+
+sealed interface AddCartState {
+    data class CartAddSuccess(val successMessage: String) : AddCartState
+    data class CartAddFail(val failMessage: String) : AddCartState
 }

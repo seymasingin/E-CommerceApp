@@ -1,7 +1,6 @@
 package com.seymasingin.e_commerceapp.ui.signin
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,7 +8,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.seymasingin.e_commerceapp.R
+import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentSignInBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,9 +36,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             btnSignIn.setOnClickListener {
                 val email = etEmail.text.toString()
                 val password = etPassword.text.toString()
-                if (checkFields(email, password)) {
-                    viewModel.signIn(email, password)
-                }
+                viewModel.signIn(email, password)
             }
             btnToSignUp.setOnClickListener {
                 findNavController().navigate(R.id.signInToSignUp)
@@ -47,30 +46,28 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         observeData()
     }
 
-    private fun observeData() {
-        viewModel.isSignIn.observe(viewLifecycleOwner){ isSignIn ->
-            if (isSignIn) {
-                findNavController().navigate(R.id.signInToHome)
-            } else {
-                Snackbar.make(requireView(), "Sign-in failed!", 1000).show()
-            }
-        }
-    }
+    private fun observeData() = with(binding) {
+        viewModel.signInState.observe(viewLifecycleOwner){ state ->
+            when (state) {
+                SignInState.Loading -> progressBarSignIn.visible()
 
-    private fun checkFields(email: String, password: String): Boolean {
-        return when {
-            Patterns.EMAIL_ADDRESS.matcher(email).matches().not() -> {
-                binding.tilEmail.error = "E-Mail is not valid!"
-                false
-            }
+                is SignInState.SuccessState -> {
+                    progressBarSignIn.gone()
+                    findNavController().navigate(R.id.signInToHome)
+                }
 
-            password.length < 6 -> {
-                binding.tilEmail.isErrorEnabled = false
-                binding.tilPassword.error = "Password length should be more than six characters!"
-                false
-            }
+                is SignInState.EmptyScreen -> {
+                    progressBarSignIn.gone()
+                    icSignInEmpty.visible()
+                    tvSignInEmpty.visible()
+                    tvSignInEmpty.text = state.failMessage
+                }
 
-            else -> true
+                is SignInState.ShowPopUp -> {
+                    progressBarSignIn.gone()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
+                }
+            }
         }
     }
 }

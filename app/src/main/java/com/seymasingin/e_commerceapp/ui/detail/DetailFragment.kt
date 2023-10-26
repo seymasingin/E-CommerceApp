@@ -30,16 +30,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.getProductDetail(args.id)
 
         observeData()
+        observeAddToCart()
 
-        with(binding) {
-            btnAddCart.setOnClickListener {
-                val userId = viewModel.userId
-                viewModel.addToCart(userId, args.id)
-            }
+        binding.fabBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
-            fabBack.setOnClickListener {
-                findNavController().navigateUp()
-            }
+        binding.btnAddCart.setOnClickListener {
+            viewModel.addToCart(viewModel.userId, args.id)
         }
     }
 
@@ -53,7 +51,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     titleDetail.text = state.product.title
                     descriptionDetail.text = state.product.description
                     priceDetail.text = "${state.product.price} £"
-                    if(state.product.saleState == true){
+                    if(state.product.saleState){
                         priceDetail.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                         salePriceDetail.text = "${state.product.salePrice} £"
                         salePriceDetail.visibility = View.VISIBLE
@@ -73,7 +71,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
                 is DetailState.EmptyScreen -> {
                     binding.progressBar.gone()
-                    ///
+                    icDetailEmpty.visible()
+                    tvDetailEmpty.visible()
+                    tvDetailEmpty.text = state.failMessage
                 }
 
                 is DetailState.ShowPopUp -> {
@@ -81,6 +81,21 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
             }
+        }
+    }
+
+    private fun observeAddToCart() {
+        viewModel.addCartState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                is AddCartState.CartAddSuccess -> {
+                    Snackbar.make(requireView(), state.successMessage, 1000).show()
+                }
+
+                is AddCartState.CartAddFail -> {
+                    Snackbar.make(requireView(), state.failMessage, 1000).show()
+                }
+            }
+
         }
     }
 }

@@ -14,23 +14,23 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val productRepository: ProductRepository) : ViewModel() {
 
-    private var _searchState = MutableLiveData<HomeState>()
-    val searchState: LiveData<HomeState> get() = _searchState
+    private var _searchState = MutableLiveData<SearchState>()
+    val searchState: LiveData<SearchState> get() = _searchState
 
     fun getSearchProducts(query: String) = viewModelScope.launch {
-        _searchState.value = HomeState.Loading
+        _searchState.value = SearchState.Loading
 
         _searchState.value = when (val result = productRepository.getSearchProducts(query)) {
-            is Resource.Success -> HomeState.SuccessState(result.data)
-            is Resource.Fail -> HomeState.EmptyScreen(result.failMessage)
-            is Resource.Error -> HomeState.ShowPopUp(result.errorMessage)
+            is Resource.Success -> SearchState.SuccessState(result.data)
+            is Resource.Fail -> SearchState.EmptyScreen(result.failMessage)
+            is Resource.Error -> SearchState.ShowPopUp(result.errorMessage)
         }
     }
 }
 
-sealed interface HomeState {
-    object Loading : HomeState
-    data class SuccessState(val products: List<ProductListUI>) : HomeState
-    data class EmptyScreen(val failMessage: String) : HomeState
-    data class ShowPopUp(val errorMessage: String) : HomeState
+sealed interface SearchState {
+    object Loading : SearchState
+    data class SuccessState(val products: List<ProductListUI>) : SearchState
+    data class EmptyScreen(val failMessage: String) : SearchState
+    data class ShowPopUp(val errorMessage: String) : SearchState
 }

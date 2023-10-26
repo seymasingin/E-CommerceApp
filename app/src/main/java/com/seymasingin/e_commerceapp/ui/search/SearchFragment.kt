@@ -51,21 +51,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private fun observeData() = with(binding) {
         viewModel.searchState.observe(viewLifecycleOwner){ state ->
             when (state) {
-                HomeState.Loading -> progressBarSearch.visible()
+                SearchState.Loading -> progressBarSearch.visible()
 
-                is HomeState.SuccessState -> {
+                is SearchState.SuccessState -> {
                     progressBarSearch.gone()
                     searchAdapter.updateList(state.products)
                 }
 
-                is HomeState.EmptyScreen -> {
+                is SearchState.EmptyScreen -> {
                     progressBarSearch.gone()
                     icSearchEmpty.visible()
                     tvSearchEmpty.visible()
                     tvSearchEmpty.text = state.failMessage
                 }
 
-                is HomeState.ShowPopUp -> {
+                is SearchState.ShowPopUp -> {
                     progressBarSearch.gone()
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
