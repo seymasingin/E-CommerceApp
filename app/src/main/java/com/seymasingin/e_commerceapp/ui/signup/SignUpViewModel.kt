@@ -19,7 +19,6 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
 
     fun signUp(email: String, password: String) = viewModelScope.launch {
         if (!checkFields(email, password)) {
-            _signUpState.value = SignUpState.EmptyScreen("Please check the fields.")
             return@launch
         }
 
@@ -32,15 +31,15 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
         }
     }
 
-    fun checkFields(email: String, password: String): Boolean {
+    private fun checkFields(email: String, password: String): Boolean {
         return when {
             Patterns.EMAIL_ADDRESS.matcher(email).matches().not() -> {
-                _signUpState.value = SignUpState.EmptyScreen("E-Mail is not valid!")
+                _signUpState.value = SignUpState.ShowPopUp("E-Mail is not valid!")
                 false
             }
 
             password.length < 6 -> {
-                _signUpState.value = SignUpState.EmptyScreen("Password length should be more than six characters!")
+                _signUpState.value = SignUpState.ShowPopUp("Password length should be more than six characters!")
                 false
             }
 

@@ -34,6 +34,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 val password = etPassword.text.toString()
                 viewModel.signUp(email, password)
             }
+            btnToSignIn.setOnClickListener {
+                findNavController().navigate(R.id.signUpToSignIn)
+            }
         }
         observeData()
     }

@@ -30,7 +30,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.getProductDetail(args.id)
 
         observeData()
-        observeAddToCart()
 
         binding.fabBack.setOnClickListener {
             findNavController().navigateUp()
@@ -82,9 +81,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 }
             }
         }
-    }
 
-    private fun observeAddToCart() {
         viewModel.addCartState.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is AddCartState.CartAddSuccess -> {
@@ -95,7 +92,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     Snackbar.make(requireView(), state.failMessage, 1000).show()
                 }
             }
-
         }
     }
 }

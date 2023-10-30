@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.seymasingin.e_commerceapp.data.model.response.Product
 import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
 import com.seymasingin.e_commerceapp.databinding.BasketCartBinding
 

@@ -41,6 +41,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
         val result = productRepository.deleteFromCart(id)
         if (result is Resource.Success) {
             _productDeleteState.value = DeleteState.DeleteSuccess(result.data)
+            getCartProducts(userId)
         }
     }
 

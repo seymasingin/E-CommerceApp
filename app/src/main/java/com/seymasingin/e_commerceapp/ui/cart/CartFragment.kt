@@ -34,6 +34,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             clearBasket.setOnClickListener {
                 viewModel.clearCart(userId)
             }
+            btnComplete.setOnClickListener {
+                findNavController().navigate(R.id.cartToPayment)
+            }
         }
 
         observeData()

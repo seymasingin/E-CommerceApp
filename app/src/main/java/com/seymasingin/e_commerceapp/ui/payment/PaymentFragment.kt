@@ -19,38 +19,36 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     private val viewModel by viewModels<PaymentViewModel>()
 
-    private val monthList =
-        listOf("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-    private val yearList = listOf("2023", "2024", "2025", "2026", "2027", "2028")
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val userId = viewModel.userId
 
-        val monthAdapter = ArrayAdapter(requireContext(), R.layout.fragment_payment, monthList)
+        val months = resources.getStringArray(R.array.months)
+        val monthAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, months)
         binding.etMonth.setAdapter(monthAdapter)
 
-        val yearAdapter = ArrayAdapter(requireContext(), R.layout.fragment_payment, yearList)
+        val years = resources.getStringArray(R.array.years)
+        val yearAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, years)
         binding.etYear.setAdapter(yearAdapter)
 
         with(binding) {
-            val number = etNumber.text.toString()
-            val name = etCardName.text.toString()
-            val cvc = etCVC.text.toString()
-            val city = etCity.text.toString()
-            val town = etTown.text.toString()
-            val address = etAddress.text.toString()
-
             etMonth.setOnItemClickListener { _, _, position, _ ->
-                monthList[position]
+                months[position]
             }
 
             etYear.setOnItemClickListener { _, _, position, _ ->
-                yearList[position]
+                years[position]
             }
 
             buy.setOnClickListener {
+                val number = etNumber.text.toString()
+                val name = etCardName.text.toString()
+                val cvc = etCVC.text.toString()
+                val city = etCity.text.toString()
+                val town = etTown.text.toString()
+                val address = etAddress.text.toString()
+
                 if (checkFields(number, name, cvc, city, town, address)) {
                     viewModel.clearCart(userId)
                     findNavController().navigate(PaymentFragmentDirections.paymentToSuccess())
@@ -70,28 +68,39 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         town: String,
         address: String
     ): Boolean {
+
         return when {
+
             number.length < 16 -> {
-                binding.tilCartNumber.error = "Card number cannot be less than 16"
+                    binding.tilCartNumber.error = "Card number cannot be less than 16"
                 false
             }
             cvc.length < 3 -> {
-                binding.tilCartNumber.error = "CVC must consist of 3 digits"
+                binding.tilCartNumber.isErrorEnabled = false
+                binding.tilCVC.error = "CVC must consist of 3 digits"
                 false
             }
             name.isEmpty() -> {
+                binding.tilCartNumber.isErrorEnabled = false
+                binding.tilCVC.isErrorEnabled = false
                 binding.tilCartHolderName.error = "Name can not be empty!"
                 false
             }
             city.isEmpty() -> {
+                binding.tilCartNumber.isErrorEnabled = false
+                binding.tilCVC.isErrorEnabled = false
                 binding.tilCity.error = "City can not be empty!"
                 false
             }
             town.isEmpty() -> {
+                binding.tilCartNumber.isErrorEnabled = false
+                binding.tilCVC.isErrorEnabled = false
                 binding.tilTown.error = "Town can not be empty!"
                 false
             }
             address.isEmpty() -> {
+                binding.tilCartNumber.isErrorEnabled = false
+                binding.tilCVC.isErrorEnabled = false
                 binding.tilAddress.error = "Town can not be empty!"
                 false
             }
