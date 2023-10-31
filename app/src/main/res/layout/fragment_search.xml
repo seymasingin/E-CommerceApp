@@ -60,7 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:itemCount="10"
-        tools:listitem="@layout/home_cart" />
+        tools:listitem="@layout/search_cart" />
 
     <ProgressBar
         android:id="@+id/progressBarSearch"

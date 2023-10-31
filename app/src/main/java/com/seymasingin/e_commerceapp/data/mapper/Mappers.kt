@@ -1,10 +1,10 @@
 package com.seymasingin.e_commerceapp.data.mapper
 
 import com.seymasingin.e_commerceapp.data.model.response.Product
-import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
+import com.seymasingin.e_commerceapp.data.model.response.ProductEntity
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 
-fun Product.mapToProductUI() =
+fun Product.mapToProductUI(favorites: List<Int>) =
     ProductUI(
         id = id ?: 1,
         title = title.orEmpty(),
@@ -17,18 +17,59 @@ fun Product.mapToProductUI() =
         imageThree = imageThree.orEmpty(),
         rate = rate ?: 0.0,
         count = count ?: 0,
-        saleState = saleState ?: false
+        saleState = saleState ?: false,
+        isFav = favorites.contains(id)
     )
 
-fun List<Product>.mapToProductListUI() =
+fun List<Product>.mapProductToProductUI(favorites: List<Int>) =
     map {
-        ProductListUI(
+        ProductUI(
             id = it.id ?: 1,
             title = it.title.orEmpty(),
             price = it.price ?: 0.0,
-            salePrice =  it.salePrice ?: 0.0,
-            imageOne = it.imageOne.orEmpty(),
+            salePrice = it.salePrice ?: 0.0,
+            description = it.description.orEmpty(),
             category = it.category.orEmpty(),
-            saleState = it.saleState ?: false
+            imageOne = it.imageOne.orEmpty(),
+            imageTwo = it.imageTwo.orEmpty(),
+            imageThree = it.imageThree.orEmpty(),
+            rate = it.rate ?: 0.0,
+            count = it.count ?: 0,
+            saleState = it.saleState ?: false,
+            isFav = favorites.contains(it.id)
+        )
+    }
+
+fun ProductUI.mapToProductEntity() =
+    ProductEntity(
+        productId = id,
+        title = title,
+        price = price,
+        salePrice = salePrice,
+        imageOne = imageOne,
+        imageTwo = imageTwo,
+        imageThree = imageThree,
+        description = description,
+        category = category,
+        rate = rate,
+        count = count,
+        saleState = saleState
+    )
+
+fun List<ProductEntity>.mapProductEntityToProductUI() =
+    map {
+        ProductUI(
+            id = it.productId ?: 1,
+            title = it.title.orEmpty(),
+            price = it.price ?: 0.0,
+            salePrice = it.salePrice ?: 0.0,
+            imageOne = it.imageOne.orEmpty(),
+            imageTwo = it.imageTwo.orEmpty(),
+            imageThree = it.imageThree.orEmpty(),
+            rate = it.rate ?: 0.0,
+            count = it.count ?: 0,
+            saleState = it.saleState ?: false,
+            description = it.description.orEmpty(),
+            category = it.category.orEmpty()
         )
     }

@@ -10,6 +10,7 @@ import com.seymasingin.e_commerceapp.R
 import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.common.visible
+import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,7 +76,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 is HomeState.EmptyScreen -> {
                     progressBarSale.gone()
-                    ////
+                    emptyWarningSale.visible()
+                    emptyWarnTextSale.visible()
+                    emptyWarnTextSale.text = state.failMessage
                 }
 
                 is HomeState.ShowPopUp -> {
@@ -86,8 +89,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun onFavClick(id: Int) {
-        null
+    private fun onFavClick(product: ProductUI) {
+        viewModel.setFavoriteState(product)
     }
 
     private fun onSaleClick(id: Int) {

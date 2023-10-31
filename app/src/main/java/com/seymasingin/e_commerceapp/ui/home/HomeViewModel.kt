@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.data.model.response.Product
-import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
+import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,6 +42,15 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
         }
     }
 
+    fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
+        if (product.isFav) {
+            productRepository.deleteFromFavorites(product)
+        } else {
+            productRepository.addToFavorites(product)
+        }
+        getProducts()
+    }
+
     fun logOut() {
         userRepository.logOut()
     }
@@ -50,7 +58,7 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
 
 sealed interface HomeState {
     object Loading : HomeState
-    data class SuccessState(val products: List<ProductListUI>) : HomeState
+    data class SuccessState(val products: List<ProductUI>) : HomeState
     data class EmptyScreen(val failMessage: String) : HomeState
     data class ShowPopUp(val errorMessage: String) : HomeState
 }

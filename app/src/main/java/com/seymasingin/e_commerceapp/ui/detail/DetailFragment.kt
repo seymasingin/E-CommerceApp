@@ -31,12 +31,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         observeData()
 
-        binding.fabBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        with(binding) {
+            fabBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
 
-        binding.btnAddCart.setOnClickListener {
-            viewModel.addToCart(viewModel.userId, args.id)
+            btnAddCart.setOnClickListener {
+                viewModel.addToCart(viewModel.userId, args.id)
+            }
         }
     }
 
@@ -49,6 +51,16 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     progressBar.gone()
                     titleDetail.text = state.product.title
                     descriptionDetail.text = state.product.description
+
+                    detailFav.setOnClickListener{
+                        viewModel.setFavoriteState(state.product)
+                    }
+
+                    detailFav.setBackgroundResource(
+                        if(state.product.isFav) R.drawable.fav_selected
+                        else R.drawable.fav_unselected
+                    )
+
                     priceDetail.text = "${state.product.price} £"
                     if(state.product.saleState){
                         priceDetail.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
@@ -58,6 +70,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         priceDetail.paintFlags = 0
                         salePriceDetail.visibility = View.GONE
                     }
+
                     count.text = "${state.product.count} pieces left"
                     category.text = state.product.category
                     ratingBar.rating = state.product.rate.toFloat()

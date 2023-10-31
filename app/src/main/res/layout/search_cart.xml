@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -23,13 +23,13 @@
             android:id="@+id/productImg1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_bias="0.045"
             app:srcCompat="@drawable/placeholder_icon" />
 
         <TextView
@@ -37,24 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="45dp"
             android:text="TextView"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/productCat"
             app:layout_constraintStart_toEndOf="@+id/productImg1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/productPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="10,00"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <TextView
             android:id="@+id/productCat"
@@ -62,29 +51,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Chair"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/productTitle"
-            app:layout_constraintTop_toBottomOf="@+id/productTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/productTitle"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10,00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/productCat"
+            app:layout_constraintEnd_toEndOf="@+id/productSale"
+            app:layout_constraintTop_toTopOf="@+id/productCat" />
 
         <TextView
             android:id="@+id/productSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="16dp"
             android:text="9,00"
             android:textColor="@color/red"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/productPrice"
-            app:layout_constraintEnd_toEndOf="@+id/productPrice" />
+            app:layout_constraintBottom_toBottomOf="@+id/productTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/productTitle" />
 
-        <ImageView
-            android:id="@+id/productFav"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/productSale"
-            app:layout_constraintEnd_toEndOf="@+id/productSale"
-            app:srcCompat="@drawable/fav_unselected" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

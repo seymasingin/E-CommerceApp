@@ -31,11 +31,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
         with(binding) {
             rvCart.adapter = cartAdapter
+
             clearBasket.setOnClickListener {
                 viewModel.clearCart(userId)
-            }
-            btnComplete.setOnClickListener {
-                findNavController().navigate(R.id.cartToPayment)
             }
         }
 
@@ -50,10 +48,18 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 is CartState.SuccessState -> {
                     progressBarCart.gone()
                     cartAdapter.updateList(state.products)
+
+                    btnComplete.setOnClickListener {
+                        if(state.products.isNotEmpty()) {
+                            findNavController().navigate(R.id.cartToPayment)
+                            viewModel.clearCart(viewModel.userId)
+                        }
+                    }
                 }
 
                 is CartState.EmptyScreen -> {
                     progressBarCart.gone()
+                    rvCart.gone()
                     icCartEmpty.visible()
                     tvCartEmpty.visible()
                     tvCartEmpty.text = state.failMessage

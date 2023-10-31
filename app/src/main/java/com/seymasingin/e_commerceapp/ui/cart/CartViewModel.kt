@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
-import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
+import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,8 +41,8 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
         val result = productRepository.deleteFromCart(id)
         if (result is Resource.Success) {
             _productDeleteState.value = DeleteState.DeleteSuccess(result.data)
-            getCartProducts(userId)
         }
+        getCartProducts(userId)
     }
 
     fun clearCart(userId: String) = viewModelScope.launch {
@@ -56,7 +56,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
 
 sealed interface CartState {
     object Loading : CartState
-    data class SuccessState(val products: List<ProductListUI>) : CartState
+    data class SuccessState(val products: List<ProductUI>) : CartState
     data class EmptyScreen(val failMessage: String) : CartState
     data class ShowPopUp(val errorMessage: String) : CartState
 }

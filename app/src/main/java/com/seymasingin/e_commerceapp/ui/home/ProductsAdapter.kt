@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.seymasingin.e_commerceapp.data.model.response.ProductListUI
+import com.seymasingin.e_commerceapp.R
+import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.HomeCartBinding
 
 class ProductsAdapter(
-    private val onFavClick: (Int) -> Unit,
+    private val onFavClick: (ProductUI) -> Unit,
     private val onProductClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ProductsAdapter.ProductsHolder>() {
 
-    private val productList = ArrayList<ProductListUI>()
+    private val productList = ArrayList<ProductUI>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsHolder {
         val binding = HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,13 +28,19 @@ class ProductsAdapter(
 
     class ProductsHolder(
         private val binding: HomeCartBinding,
-        private val onFavClick: (Int) -> Unit,
+        private val onFavClick: (ProductUI) -> Unit,
         private val onProductClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: ProductListUI) {
+        fun bind(product: ProductUI) {
             with(binding) {
                 productTitle.text = product.title
                 productCat.text = product.category
+
+                productFav.setBackgroundResource(
+                    if(product.isFav) R.drawable.fav_selected
+                    else R.drawable.fav_unselected
+                )
+
                 productPrice.text = "${product.price} £"
                 if (product.saleState == true) {
                     productPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
@@ -43,12 +50,14 @@ class ProductsAdapter(
                     productPrice.paintFlags = 0
                     productSale.visibility = View.GONE
                 }
+
                 Glide.with(productImg1).load(product.imageOne).into(productImg1)
                 productFav.setOnClickListener {
-                    onFavClick(product.id ?: 1)
+                    onFavClick(product)
                 }
+
                 root.setOnClickListener {
-                    onProductClick(product.id ?: 1)
+                    onProductClick(product.id)
                 }
             }
         }
@@ -58,7 +67,7 @@ class ProductsAdapter(
         return productList.size
     }
 
-    fun updateList(list: List<ProductListUI>) {
+    fun updateList(list: List<ProductUI>) {
         productList.clear()
         productList.addAll(list)
         notifyItemRangeChanged(0, list.size)

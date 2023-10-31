@@ -129,4 +129,28 @@
         app:layout_constraintStart_toStartOf="@+id/emptyWarning"
         app:layout_constraintTop_toBottomOf="@+id/emptyWarning" />
 
+    <ImageView
+        android:id="@+id/emptyWarningSale"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/warning_icon"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/emptyWarnTextSale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvSaleProducts" />
+
+    <TextView
+        android:id="@+id/emptyWarnTextSale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WARNING"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/rvSaleProducts"
+        app:layout_constraintEnd_toEndOf="@+id/emptyWarningSale"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/emptyWarningSale"
+        app:layout_constraintTop_toBottomOf="@+id/emptyWarningSale" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

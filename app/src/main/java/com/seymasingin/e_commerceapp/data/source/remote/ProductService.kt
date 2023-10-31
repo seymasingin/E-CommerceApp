@@ -1,16 +1,13 @@
 package com.seymasingin.e_commerceapp.data.source.remote
 
 import com.seymasingin.e_commerceapp.data.model.request.AddToCartRequest
-import com.seymasingin.e_commerceapp.data.model.response.AddToCartResponse
 import com.seymasingin.e_commerceapp.data.model.request.ClearCartRequest
-import com.seymasingin.e_commerceapp.data.model.response.ClearCartResponse
 import com.seymasingin.e_commerceapp.data.model.request.DeleteFromCartRequest
-import com.seymasingin.e_commerceapp.data.model.response.DeleteFromCartResponse
+import com.seymasingin.e_commerceapp.data.model.response.BaseResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetCartProductsResponse
-import com.seymasingin.e_commerceapp.data.model.response.GetCategoriesResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetProductDetailResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetProductsResponse
-import retrofit2.Call
+import com.seymasingin.e_commerceapp.data.model.response.GetSaleProductsResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,7 +20,7 @@ interface ProductService {
     suspend fun getProducts(): Response<GetProductsResponse>
 
     @GET("get_sale_products.php")
-    suspend fun getSaleProducts(): Response<GetProductsResponse>
+    suspend fun getSaleProducts(): Response<GetSaleProductsResponse>
 
     @GET("get_product_detail.php")
     suspend fun getProductDetail(
@@ -40,26 +37,26 @@ interface ProductService {
         @Query("query") query: String
     ): Response<GetProductsResponse>
 
-    @GET("get_products_by_category")
+    /*@GET("get_products_by_category")
     fun getProductsByCategory(
         @Query("query") query: String
     ): Call<GetProductsResponse>
 
     @GET("get_categories")
-    fun getCategories(): Call<GetCategoriesResponse>
+    fun getCategories(): Call<GetCategoriesResponse>*/
 
     @POST("delete_from_cart.php")
     suspend fun deleteFromCart(
         @Body deleteFromCartRequest: DeleteFromCartRequest
-    ): Response<DeleteFromCartResponse>
+    ): Response<BaseResponse>
 
     @POST("add_to_cart.php")
     suspend fun addToCart(
         @Body addToCartRequest: AddToCartRequest
-    ): Response<AddToCartResponse>
+    ): Response<BaseResponse>
 
     @POST("clear_cart.php")
     suspend fun clearCart(
         @Body clearCartRequest: ClearCartRequest
-    ): Response<ClearCartResponse>
+    ): Response<BaseResponse>
 }

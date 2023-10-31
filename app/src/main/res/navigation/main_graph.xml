@@ -65,7 +65,8 @@
         tools:layout="@layout/fragment_payment" >
         <action
             android:id="@+id/paymentToSuccess"
-            app:destination="@id/successFragment" />
+            app:destination="@id/successFragment"
+            app:popUpTo="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"

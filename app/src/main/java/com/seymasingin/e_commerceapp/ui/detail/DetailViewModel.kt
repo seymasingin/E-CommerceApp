@@ -43,6 +43,15 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
             _addCartState.value = AddCartState.CartAddFail(result.failMessage)
         }
     }
+
+    fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
+        if (product.isFav) {
+            productRepository.deleteFromFavorites(product)
+        } else {
+            productRepository.addToFavorites(product)
+        }
+        getProductDetail(product.id)
+    }
 }
 
 sealed interface DetailState {

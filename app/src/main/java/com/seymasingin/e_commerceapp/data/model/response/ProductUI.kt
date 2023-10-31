@@ -13,4 +13,5 @@ data class ProductUI(
     val rate: Double,
     val count: Int,
     val saleState: Boolean,
+    val isFav: Boolean = false
 )

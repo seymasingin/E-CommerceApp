@@ -21,7 +21,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val viewModel by viewModels<SearchViewModel>()
 
-    private val searchAdapter = SearchAdapter(onProductClick = ::onProductClick, onFavClick = ::onFavClick)
+    private val searchAdapter = SearchAdapter(onProductClick = ::onProductClick)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,6 +37,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     if (newText != null) {
                         if (newText.length >= 3) {
                             viewModel.getSearchProducts(newText)
+                            tvSearchEmpty.gone()
+                            icSearchEmpty.gone()
+                        }
+                        else {
+                            tvSearchEmpty.gone()
+                            icSearchEmpty.gone()
                         }
                     }
                     return true
@@ -71,10 +77,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
             }
         }
-    }
-
-    private fun onFavClick(id: Int) {
-        null
     }
 
     private fun onProductClick(id: Int) {

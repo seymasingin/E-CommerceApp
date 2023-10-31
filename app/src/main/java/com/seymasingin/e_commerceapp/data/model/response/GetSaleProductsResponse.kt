@@ -1,5 +1,5 @@
 package com.seymasingin.e_commerceapp.data.model.response
 
-data class GetCartProductsResponse(
-    val products: List<Product>?
+data class GetSaleProductsResponse(
+    val products: List<Product>?,
 ): BaseResponse()
