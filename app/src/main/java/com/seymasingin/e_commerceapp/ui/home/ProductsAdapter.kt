@@ -4,6 +4,8 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seymasingin.e_commerceapp.R
@@ -13,24 +15,24 @@ import com.seymasingin.e_commerceapp.databinding.HomeCartBinding
 class ProductsAdapter(
     private val onFavClick: (ProductUI) -> Unit,
     private val onProductClick: (Int) -> Unit
-) : RecyclerView.Adapter<ProductsAdapter.ProductsHolder>() {
-
-    private val productList = ArrayList<ProductUI>()
+) : ListAdapter<ProductUI, ProductsAdapter.ProductsHolder>(ProductDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsHolder {
-        val binding = HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductsHolder(binding, onFavClick, onProductClick)
+        return ProductsHolder(
+            HomeCartBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onFavClick,
+            onProductClick
+        )
     }
 
-    override fun onBindViewHolder(holder: ProductsHolder, position: Int) {
-        holder.bind(productList[position])
-    }
+    override fun onBindViewHolder(holder: ProductsHolder, position: Int) =holder.bind(getItem(position))
 
     class ProductsHolder(
         private val binding: HomeCartBinding,
         private val onFavClick: (ProductUI) -> Unit,
         private val onProductClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(product: ProductUI) {
             with(binding) {
                 productTitle.text = product.title
@@ -42,7 +44,7 @@ class ProductsAdapter(
                 )
 
                 productPrice.text = "${product.price} £"
-                if (product.saleState == true) {
+                if (product.saleState) {
                     productPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     productSale.text = "${product.salePrice} £"
                     productSale.visibility = View.VISIBLE
@@ -63,14 +65,13 @@ class ProductsAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return productList.size
-    }
+    class ProductDiffUtilCallBack : DiffUtil.ItemCallback<ProductUI>() {
+        override fun areItemsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun updateList(list: List<ProductUI>) {
-        productList.clear()
-        productList.addAll(list)
-        notifyItemRangeChanged(0, list.size)
+        override fun areContentsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
+            return oldItem == newItem
+        }
     }
-
 }

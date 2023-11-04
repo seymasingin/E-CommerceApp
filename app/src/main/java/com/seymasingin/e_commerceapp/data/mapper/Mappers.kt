@@ -53,7 +53,7 @@ fun ProductUI.mapToProductEntity() =
         category = category,
         rate = rate,
         count = count,
-        saleState = saleState
+        saleState = saleState,
     )
 
 fun List<ProductEntity>.mapProductEntityToProductUI() =
@@ -70,6 +70,6 @@ fun List<ProductEntity>.mapProductEntityToProductUI() =
             count = it.count ?: 0,
             saleState = it.saleState ?: false,
             description = it.description.orEmpty(),
-            category = it.category.orEmpty()
+            category = it.category.orEmpty(),
         )
     }

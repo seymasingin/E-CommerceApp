@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.seymasingin.e_commerceapp.R
 import com.seymasingin.e_commerceapp.common.viewBinding
 import com.seymasingin.e_commerceapp.databinding.FragmentSuccessBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 class SuccessFragment : Fragment(R.layout.fragment_success) {
 

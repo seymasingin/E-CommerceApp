@@ -2,6 +2,8 @@ package com.seymasingin.e_commerceapp.ui.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
@@ -10,17 +12,18 @@ import com.seymasingin.e_commerceapp.databinding.FavCartBinding
 
 class FavAdapter(private val onDeleteFromFav: (ProductUI) -> Unit,
                  private val onProductClick: (Int) -> Unit) :
-    RecyclerView.Adapter<FavAdapter.FavHolder>() {
-
-    private val favList = ArrayList<ProductUI>()
+    ListAdapter<ProductUI, FavAdapter.FavHolder>(FavProductDiffUtilCallBack())  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavHolder {
-        val binding = FavCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FavHolder(binding, onDeleteFromFav, onProductClick)
+        return FavHolder(
+            FavCartBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onDeleteFromFav,
+            onProductClick
+        )
     }
 
     override fun onBindViewHolder(holder: FavHolder, position: Int) {
-        holder.bind(favList[position])
+        holder.bind(getItem(position))
     }
 
     class FavHolder(
@@ -28,6 +31,7 @@ class FavAdapter(private val onDeleteFromFav: (ProductUI) -> Unit,
         private val onDeleteFromFav: (ProductUI) -> Unit,
         private val onProductClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(favProduct: ProductUI) {
             with(binding) {
                 favTitle.text = favProduct.title
@@ -45,14 +49,13 @@ class FavAdapter(private val onDeleteFromFav: (ProductUI) -> Unit,
         }
     }
 
-    override fun getItemCount(): Int {
-        return favList.size
-    }
+    class FavProductDiffUtilCallBack : DiffUtil.ItemCallback<ProductUI>() {
+        override fun areItemsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun updateList(list: List<ProductUI>) {
-        favList.clear()
-        favList.addAll(list)
-        //notifyItemRangeChanged(0, list.size)
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
+            return oldItem == newItem
+        }
     }
 }

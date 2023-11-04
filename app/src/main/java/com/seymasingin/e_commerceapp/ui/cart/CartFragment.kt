@@ -47,12 +47,11 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
                 is CartState.SuccessState -> {
                     progressBarCart.gone()
-                    cartAdapter.updateList(state.products)
+                    cartAdapter.submitList(state.products)
 
                     btnComplete.setOnClickListener {
                         if(state.products.isNotEmpty()) {
                             findNavController().navigate(R.id.cartToPayment)
-                            viewModel.clearCart(viewModel.userId)
                         }
                     }
                 }

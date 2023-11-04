@@ -4,30 +4,33 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.BasketCartBinding
 
-class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit, private val onProductClick: (Int) -> Unit) :
-    RecyclerView.Adapter<CartAdapter.CartHolder>() {
 
-    private val cartList = ArrayList<ProductUI>()
+class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit, private val onProductClick: (Int) -> Unit) :
+    ListAdapter<ProductUI, CartAdapter.CartHolder>(CartProductDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartHolder {
-        val binding = BasketCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CartHolder(binding, onDeleteFromBasket, onProductClick)
+        return CartHolder(
+            BasketCartBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onDeleteFromBasket,
+            onProductClick
+        )
     }
 
-    override fun onBindViewHolder(holder: CartHolder, position: Int) {
-        holder.bind(cartList[position])
-    }
+    override fun onBindViewHolder(holder: CartHolder, position: Int) =holder.bind(getItem(position))
 
     class CartHolder(
         private val binding: BasketCartBinding,
         private val onDeleteFromBasket: (Int) -> Unit,
         private val onProductClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(product: ProductUI) {
             with(binding) {
                 basketCartTitle.text = product.title
@@ -55,13 +58,13 @@ class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit, private val onP
         }
     }
 
-    override fun getItemCount(): Int {
-        return cartList.size
-    }
+    class CartProductDiffUtilCallBack : DiffUtil.ItemCallback<ProductUI>() {
+        override fun areItemsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun updateList(list: List<ProductUI>) {
-        cartList.clear()
-        cartList.addAll(list)
-        notifyItemRangeChanged(0, list.size)
+        override fun areContentsTheSame(oldItem: ProductUI, newItem: ProductUI): Boolean {
+            return oldItem == newItem
+        }
     }
 }

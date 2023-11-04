@@ -48,7 +48,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 is HomeState.SuccessState -> {
                     progressBarAll.gone()
-                    productAdapter.updateList(state.products)
+                    productAdapter.submitList(state.products)
                 }
 
                 is HomeState.EmptyScreen -> {
@@ -71,7 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 is HomeState.SuccessState -> {
                     progressBarSale.gone()
-                    saleAdapter.updateList(state.products)
+                    saleAdapter.submitList(state.products)
                 }
 
                 is HomeState.EmptyScreen -> {

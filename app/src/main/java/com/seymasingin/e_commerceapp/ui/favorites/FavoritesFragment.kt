@@ -42,7 +42,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
                 is FavoritesState.SuccessState -> {
                     progressBarFav.gone()
-                    favAdapter.updateList(state.products)
+                    favAdapter.submitList(state.products)
                 }
 
                 is FavoritesState.EmptyScreen -> {

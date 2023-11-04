@@ -33,6 +33,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     viewModel.getSearchProducts(query)
                     return true
                 }
+
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText != null) {
                         if (newText.length >= 3) {

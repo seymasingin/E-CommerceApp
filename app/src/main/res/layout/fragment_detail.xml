@@ -38,21 +38,20 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddCart"
         app:layout_constraintEnd_toEndOf="@+id/count"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <TextView
             android:id="@+id/descriptionDetail"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="description"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            android:textSize="16sp" />
 
     </ScrollView>
 
@@ -71,13 +70,14 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:isIndicator="true"
         android:numStars="5"
         android:progressTint="@color/darkgray"
         android:rating="4.2"
         android:stepSize="0.1"
-        app:layout_constraintStart_toStartOf="@+id/titleDetail"
-        app:layout_constraintTop_toBottomOf="@+id/category" />
+        app:layout_constraintBottom_toBottomOf="@+id/category"
+        app:layout_constraintEnd_toEndOf="@+id/priceDetail"
+        app:layout_constraintTop_toTopOf="@+id/category" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
@@ -95,11 +95,11 @@
         android:id="@+id/starNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:text="4.2"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar"
+        app:layout_constraintEnd_toStartOf="@+id/ratingBar"
         app:layout_constraintTop_toTopOf="@+id/ratingBar" />
 
     <TextView
@@ -116,19 +116,19 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="14dp"
         android:text="DESCRIPTION"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/titleDetail"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/category" />
 
     <TextView
         android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="Category"
         app:layout_constraintStart_toStartOf="@+id/titleDetail"
         app:layout_constraintTop_toBottomOf="@+id/titleDetail" />
@@ -137,12 +137,14 @@
         android:id="@+id/salePriceDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:text="79"
         android:textColor="@color/red"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/viewPager2"
-        app:layout_constraintTop_toTopOf="@+id/category" />
+        app:layout_constraintBottom_toBottomOf="@+id/priceDetail"
+        app:layout_constraintEnd_toStartOf="@+id/priceDetail"
+        app:layout_constraintTop_toTopOf="@+id/priceDetail" />
 
     <Button
         android:id="@+id/btnAddCart"
@@ -155,7 +157,7 @@
         android:textSize="18sp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/salePriceDetail"
+        app:layout_constraintEnd_toEndOf="@+id/priceDetail"
         app:layout_constraintStart_toStartOf="@+id/titleDetail" />
 
     <ProgressBar

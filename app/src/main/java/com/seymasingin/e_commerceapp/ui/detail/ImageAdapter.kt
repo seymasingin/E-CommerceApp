@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seymasingin.e_commerceapp.databinding.ImageSliderBinding
 
-class ImageAdapter(private val images: List<String?>) :
+class ImageAdapter :
     RecyclerView.Adapter<ImageAdapter.PageViewHolder>() {
+
+    private val imageList = ArrayList<String>()
 
     class PageViewHolder(val binding: ImageSliderBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(imageUrl: String) {
@@ -21,12 +23,18 @@ class ImageAdapter(private val images: List<String?>) :
     }
 
     override fun getItemCount(): Int {
-        return images.size
+        return imageList.size
     }
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
-        images[position]?.let {
+        imageList[position].let {
             holder.bind(it)
         }
+    }
+
+    fun updateList(list: List<String>) {
+        imageList.clear()
+        imageList.addAll(list)
+        notifyItemRangeChanged(0, list.size)
     }
 }

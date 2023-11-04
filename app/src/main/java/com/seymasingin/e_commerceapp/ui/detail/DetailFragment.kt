@@ -24,6 +24,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val viewModel by viewModels<DetailViewModel>()
 
+    private val imageAdapter = ImageAdapter()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -76,9 +78,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     ratingBar.rating = state.product.rate.toFloat()
                     starNumber.text = state.product.rate.toString()
 
-                    val images = listOf(state.product.imageOne, state.product.imageTwo, state.product.imageThree)
-                    val imageAdapter = ImageAdapter(images)
                     viewPager2.adapter = imageAdapter
+                    val images = listOf(state.product.imageOne, state.product.imageTwo, state.product.imageThree)
+                    imageAdapter.updateList(images)
                 }
 
                 is DetailState.EmptyScreen -> {

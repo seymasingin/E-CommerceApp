@@ -22,8 +22,6 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userId = viewModel.userId
-
         val months = resources.getStringArray(R.array.months)
         val monthAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, months)
         binding.etMonth.setAdapter(monthAdapter)
@@ -50,8 +48,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 val address = etAddress.text.toString()
 
                 if (checkFields(number, name, cvc, city, town, address)) {
-                    viewModel.clearCart(userId)
                     findNavController().navigate(PaymentFragmentDirections.paymentToSuccess())
+                    viewModel.clearCart(viewModel.userId)
                 }
                 else {
                     Snackbar.make(requireView(), "Fill in the required blanks", 1000).show()
