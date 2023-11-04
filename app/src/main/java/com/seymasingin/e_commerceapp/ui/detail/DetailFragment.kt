@@ -39,7 +39,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
 
             btnAddCart.setOnClickListener {
-                viewModel.addToCart(viewModel.userId, args.id)
+                viewModel.addToCart(args.id)
             }
         }
     }

@@ -40,7 +40,7 @@ fun List<Product>.mapProductToProductUI(favorites: List<Int>) =
         )
     }
 
-fun ProductUI.mapToProductEntity() =
+fun ProductUI.mapToProductEntity(uId: String) =
     ProductEntity(
         productId = id,
         title = title,
@@ -54,6 +54,7 @@ fun ProductUI.mapToProductEntity() =
         rate = rate,
         count = count,
         saleState = saleState,
+        userId = uId
     )
 
 fun List<ProductEntity>.mapProductEntityToProductUI() =
@@ -70,6 +71,7 @@ fun List<ProductEntity>.mapProductEntityToProductUI() =
             count = it.count ?: 0,
             saleState = it.saleState ?: false,
             description = it.description.orEmpty(),
-            category = it.category.orEmpty(),
+            category = it.category.orEmpty()
         )
     }
+

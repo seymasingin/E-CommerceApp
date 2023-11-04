@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel  @Inject constructor(private val productRepository: ProductRepository,
-                                            userRepository: UserRepository) : ViewModel() {
+                                           private val userRepository: UserRepository) : ViewModel() {
 
     private var _detailState = MutableLiveData<DetailState>()
     val detailState: LiveData<DetailState> get() = _detailState
@@ -34,8 +34,8 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
         }
     }
 
-    fun addToCart(userId: String, productId: Int) = viewModelScope.launch {
-        val result = productRepository.addToCart(userId, productId)
+    fun addToCart(productId: Int) = viewModelScope.launch {
+        val result = productRepository.addToCart(productId)
         if (result is Resource.Success) {
             _addCartState.value = AddCartState.CartAddSuccess(result.data)
         }

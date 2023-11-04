@@ -1,6 +1,8 @@
 package com.seymasingin.e_commerceapp.ui.favorites
 
+import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -36,6 +38,17 @@ class FavAdapter(private val onDeleteFromFav: (ProductUI) -> Unit,
             with(binding) {
                 favTitle.text = favProduct.title
                 favPrice.text = "${favProduct.price}"
+
+                favPrice.text = "${favProduct.price} £"
+                if (favProduct.saleState) {
+                    favPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    salePriceFav.text = "${favProduct.salePrice} £"
+                    salePriceFav.visibility = View.VISIBLE
+                } else {
+                    favPrice.paintFlags = 0
+                    salePriceFav.visibility = View.GONE
+                }
+
                 Glide.with(favImage).load(favProduct.imageOne).into(favImage)
 
                 favDelete.setOnClickListener {

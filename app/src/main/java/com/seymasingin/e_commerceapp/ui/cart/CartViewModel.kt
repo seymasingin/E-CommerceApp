@@ -27,10 +27,10 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
 
     val userId = userRepository.getUserId()
 
-    fun getCartProducts(userId: String) = viewModelScope.launch {
+    fun getCartProducts() = viewModelScope.launch {
         _cartState.value = CartState.Loading
 
-        _cartState.value = when (val result = productRepository.getCartProducts(userId) ){
+        _cartState.value = when (val result = productRepository.getCartProducts() ){
             is Resource.Success -> CartState.SuccessState(result.data)
             is Resource.Fail -> CartState.EmptyScreen(result.failMessage)
             is Resource.Error -> CartState.ShowPopUp(result.errorMessage)
@@ -42,15 +42,15 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
         if (result is Resource.Success) {
             _productDeleteState.value = DeleteState.DeleteSuccess(result.data)
         }
-        getCartProducts(userId)
+        getCartProducts()
     }
 
-    fun clearCart(userId: String) = viewModelScope.launch {
-        val result = productRepository.clearCart(userId)
+    fun clearCart() = viewModelScope.launch {
+        val result = productRepository.clearCart()
         if(result is Resource.Success) {
             _clearCartState.value = DeleteState.DeleteSuccess(result.data)
         }
-        getCartProducts(userId)
+        getCartProducts()
     }
 }
 

@@ -2,14 +2,15 @@ package com.seymasingin.e_commerceapp.data.model.response
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "fav_products")
+@Entity(tableName = "fav_products", primaryKeys = ["productId", "userId"])
 data class ProductEntity(
 
-    @PrimaryKey
     @ColumnInfo(name = "productId")
-    val productId: Int?,
+    val productId: Int,
+
+    @ColumnInfo(name = "userId")
+    val userId: String,
 
     @ColumnInfo(name = "title")
     val title: String?,

@@ -49,7 +49,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
                 if (checkFields(number, name, cvc, city, town, address)) {
                     findNavController().navigate(PaymentFragmentDirections.paymentToSuccess())
-                    viewModel.clearCart(viewModel.userId)
+                    viewModel.clearCart()
                 }
                 else {
                     Snackbar.make(requireView(), "Fill in the required blanks", 1000).show()

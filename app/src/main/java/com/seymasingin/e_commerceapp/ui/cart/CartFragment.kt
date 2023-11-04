@@ -25,15 +25,13 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userId = viewModel.userId
-
-        viewModel.getCartProducts(userId)
+        viewModel.getCartProducts()
 
         with(binding) {
             rvCart.adapter = cartAdapter
 
             clearBasket.setOnClickListener {
-                viewModel.clearCart(userId)
+                viewModel.clearCart()
             }
         }
 

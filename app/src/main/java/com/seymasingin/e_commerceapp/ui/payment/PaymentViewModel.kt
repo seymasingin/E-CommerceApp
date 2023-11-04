@@ -16,7 +16,7 @@ class PaymentViewModel @Inject constructor(private val productRepository: Produc
 
     val userId = userRepository.getUserId()
 
-    fun clearCart(userId: String) = viewModelScope.launch {
-        productRepository.clearCart(userId)
+    fun clearCart() = viewModelScope.launch {
+        productRepository.clearCart()
     }
 }

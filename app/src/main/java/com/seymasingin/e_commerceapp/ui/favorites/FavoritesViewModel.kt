@@ -7,13 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
-import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel  @Inject constructor(private val productRepository: ProductRepository,
+class FavoritesViewModel  @Inject constructor(private val productRepository: ProductRepository
 ) : ViewModel() {
 
     private var _favoritesState = MutableLiveData<FavoritesState>()
@@ -31,6 +30,11 @@ class FavoritesViewModel  @Inject constructor(private val productRepository: Pro
 
     fun deleteFromFavorites(product: ProductUI) = viewModelScope.launch {
         productRepository.deleteFromFavorites(product)
+        getFavorites()
+    }
+
+    fun clearFavorites() = viewModelScope.launch {
+        productRepository.clearFavorites()
         getFavorites()
     }
 }

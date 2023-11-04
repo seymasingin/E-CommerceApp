@@ -30,6 +30,9 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
         with(binding) {
             rvFav.adapter = favAdapter
+            clearFavs.setOnClickListener {
+                viewModel.clearFavorites()
+            }
         }
 
         observeData()
