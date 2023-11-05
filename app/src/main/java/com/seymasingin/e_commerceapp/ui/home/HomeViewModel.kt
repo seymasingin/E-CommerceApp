@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
         getProducts()
     }
 
-    fun logOut() {
+    fun logOut() = viewModelScope.launch {
         userRepository.logOut()
     }
 }

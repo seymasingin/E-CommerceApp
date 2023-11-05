@@ -7,22 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
-import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel  @Inject constructor(private val productRepository: ProductRepository,
-                                           private val userRepository: UserRepository) : ViewModel() {
+class DetailViewModel  @Inject constructor(private val productRepository: ProductRepository) :
+    ViewModel() {
 
     private var _detailState = MutableLiveData<DetailState>()
     val detailState: LiveData<DetailState> get() = _detailState
 
     private var _addCartState = MutableLiveData<AddCartState>()
     val addCartState: LiveData<AddCartState> get() = _addCartState
-
-    val userId = userRepository.getUserId()
 
     fun getProductDetail(id: Int) = viewModelScope.launch {
         _detailState.value = DetailState.Loading

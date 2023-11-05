@@ -7,14 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
-import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(private val productRepository: ProductRepository,
-                                        private val userRepository: UserRepository) : ViewModel() {
+class CartViewModel @Inject constructor(private val productRepository: ProductRepository) :
+    ViewModel() {
 
     private var _cartState = MutableLiveData<CartState>()
     val cartState: LiveData<CartState> get() = _cartState
@@ -24,8 +23,6 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
 
     private var _clearCartState = MutableLiveData<DeleteState>()
     val clearCartState: LiveData<DeleteState> get() = _clearCartState
-
-    val userId = userRepository.getUserId()
 
     fun getCartProducts() = viewModelScope.launch {
         _cartState.value = CartState.Loading

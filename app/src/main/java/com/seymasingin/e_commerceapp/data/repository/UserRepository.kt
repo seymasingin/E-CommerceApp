@@ -38,9 +38,11 @@ class UserRepository {
             }
         }
 
-    fun logOut() {
+    suspend fun logOut() = withContext(Dispatchers.IO) {
         auth.signOut()
     }
 
-    fun getUserId(): String = auth.currentUser?.uid.orEmpty()
+    suspend fun getUserId() = withContext(Dispatchers.IO) {
+        auth.currentUser?.uid.orEmpty()
+    }
 }

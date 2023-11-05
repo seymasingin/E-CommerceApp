@@ -11,10 +11,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PaymentViewModel @Inject constructor(private val productRepository: ProductRepository,
-                       private val userRepository: UserRepository): ViewModel() {
-
-    val userId = userRepository.getUserId()
+class PaymentViewModel @Inject constructor(private val productRepository: ProductRepository):
+    ViewModel() {
 
     fun clearCart() = viewModelScope.launch {
         productRepository.clearCart()
