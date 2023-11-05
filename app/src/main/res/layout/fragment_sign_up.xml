@@ -82,7 +82,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Do you already have an account?"
+        android:text="Already have an account?"
         app:layout_constraintBottom_toBottomOf="@+id/btnToSignIn"
         app:layout_constraintStart_toStartOf="@+id/btnSignUp"
         app:layout_constraintTop_toTopOf="@+id/btnToSignIn" />

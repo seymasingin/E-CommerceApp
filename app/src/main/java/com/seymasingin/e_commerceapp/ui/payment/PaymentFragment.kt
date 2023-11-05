@@ -8,7 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
+import com.seymasingin.e_commerceapp.common.gone
 import com.seymasingin.e_commerceapp.common.viewBinding
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.databinding.FragmentPaymentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,15 +24,16 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val months = resources.getStringArray(R.array.months)
-        val monthAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, months)
-        binding.etMonth.setAdapter(monthAdapter)
-
-        val years = resources.getStringArray(R.array.years)
-        val yearAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, years)
-        binding.etYear.setAdapter(yearAdapter)
-
         with(binding) {
+
+            val months = resources.getStringArray(R.array.months)
+            val monthAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, months)
+            etMonth.setAdapter(monthAdapter)
+
+            val years = resources.getStringArray(R.array.years)
+            val yearAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, years)
+            etYear.setAdapter(yearAdapter)
+
             etMonth.setOnItemClickListener { _, _, position, _ ->
                 months[position]
             }
@@ -41,68 +44,35 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
             buy.setOnClickListener {
                 val number = etNumber.text.toString()
-                val name = etCardName.text.toString()
                 val cvc = etCVC.text.toString()
+                val name = etCardName.text.toString()
                 val city = etCity.text.toString()
                 val town = etTown.text.toString()
                 val address = etAddress.text.toString()
 
-                if (checkFields(number, name, cvc, city, town, address)) {
-                    findNavController().navigate(PaymentFragmentDirections.paymentToSuccess())
-                    viewModel.clearCart()
-                }
-                else {
-                    Snackbar.make(requireView(), "Fill in the required blanks", 1000).show()
-                }
+                viewModel.payment(number, cvc, name, city, town, address)
             }
         }
+
+        observeData()
     }
 
-    private fun checkFields(
-        number: String,
-        name: String,
-        cvc: String,
-        city: String,
-        town: String,
-        address: String
-    ): Boolean {
+    private fun observeData() = with(binding) {
+        viewModel.paymentState.observe(viewLifecycleOwner) {state ->
+            when(state) {
+                PaymentState.Loading -> progressBarPayment.visible()
 
-        return when {
+                is PaymentState.SuccessState -> {
+                    progressBarPayment.gone()
+                    findNavController().navigate(R.id.paymentToSuccess)
+                    viewModel.clearCart()
+                }
 
-            number.length < 16 -> {
-                    binding.tilCartNumber.error = "Card number cannot be less than 16"
-                false
+                is PaymentState.ShowPopUp -> {
+                    progressBarPayment.gone()
+                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
+                }
             }
-            cvc.length < 3 -> {
-                binding.tilCartNumber.isErrorEnabled = false
-                binding.tilCVC.error = "CVC must consist of 3 digits"
-                false
-            }
-            name.isEmpty() -> {
-                binding.tilCartNumber.isErrorEnabled = false
-                binding.tilCVC.isErrorEnabled = false
-                binding.tilCartHolderName.error = "Name can not be empty!"
-                false
-            }
-            city.isEmpty() -> {
-                binding.tilCartNumber.isErrorEnabled = false
-                binding.tilCVC.isErrorEnabled = false
-                binding.tilCity.error = "City can not be empty!"
-                false
-            }
-            town.isEmpty() -> {
-                binding.tilCartNumber.isErrorEnabled = false
-                binding.tilCVC.isErrorEnabled = false
-                binding.tilTown.error = "Town can not be empty!"
-                false
-            }
-            address.isEmpty() -> {
-                binding.tilCartNumber.isErrorEnabled = false
-                binding.tilCVC.isErrorEnabled = false
-                binding.tilAddress.error = "Town can not be empty!"
-                false
-            }
-            else -> true
         }
     }
 }

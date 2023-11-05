@@ -20,7 +20,7 @@ class UserRepository {
                     Resource.Fail("An error occurred during sign in")
                 }
             } catch (e: Exception) {
-                Resource.Error("Password or email is incorrect")
+                Resource.Error(e.message.orEmpty())
             }
         }
 
