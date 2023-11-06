@@ -59,6 +59,11 @@ class SearchAdapter(
     fun updateList(list: List<ProductUI>) {
         searchList.clear()
         searchList.addAll(list)
+        notifyItemRangeChanged(0, list.size)
+    }
+
+    fun clearList() {
+        searchList.clear()
         notifyDataSetChanged()
     }
 }

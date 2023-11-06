@@ -37,14 +37,6 @@ interface ProductService {
         @Query("query") query: String
     ): Response<GetProductsResponse>
 
-    /*@GET("get_products_by_category")
-    fun getProductsByCategory(
-        @Query("query") query: String
-    ): Call<GetProductsResponse>
-
-    @GET("get_categories")
-    fun getCategories(): Call<GetCategoriesResponse>*/
-
     @POST("delete_from_cart.php")
     suspend fun deleteFromCart(
         @Body deleteFromCartRequest: DeleteFromCartRequest

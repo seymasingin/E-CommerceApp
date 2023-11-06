@@ -29,7 +29,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         with(binding) {
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    var query = query.orEmpty()
+                    val query = query.orEmpty()
                     viewModel.getSearchProducts(query)
                     return true
                 }
@@ -42,6 +42,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             icSearchEmpty.gone()
                         }
                         else {
+                            searchAdapter.clearList()
                             tvSearchEmpty.gone()
                             icSearchEmpty.gone()
                         }

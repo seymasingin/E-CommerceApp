@@ -21,14 +21,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private val viewModel by viewModels<SignInViewModel>()
 
-    private lateinit var auth: FirebaseAuth
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
-
-        auth.currentUser?.let {
+        viewModel.getCurrentUser().let {
             findNavController().navigate(R.id.signInToHome)
         }
 

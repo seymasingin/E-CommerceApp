@@ -86,7 +86,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }
     }
 
-    private fun onDeleteFromBasket(id: Int){
+    private fun onDeleteFromBasket(id: Int) {
         viewModel.deleteFromCart(id)
     }
 

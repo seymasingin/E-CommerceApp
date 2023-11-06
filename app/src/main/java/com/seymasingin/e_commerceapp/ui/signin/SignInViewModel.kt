@@ -31,7 +31,11 @@ class SignInViewModel @Inject constructor(private val userRepository: UserReposi
         }
     }
 
-    fun checkFields(email: String, password: String): Boolean {
+    fun getCurrentUser() = viewModelScope.launch {
+        userRepository.getCurrentUser()
+    }
+
+    private fun checkFields(email: String, password: String): Boolean {
         return when {
             Patterns.EMAIL_ADDRESS.matcher(email).matches().not() -> {
                 _signInState.value = SignInState.ShowPopUp("E-Mail is not valid!")

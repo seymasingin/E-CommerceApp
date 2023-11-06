@@ -21,12 +21,8 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private val viewModel by viewModels<SignUpViewModel>()
 
-    private lateinit var auth: FirebaseAuth
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        auth = FirebaseAuth.getInstance()
 
         with(binding) {
             btnSignUp.setOnClickListener {
@@ -38,6 +34,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 findNavController().navigate(R.id.signUpToSignIn)
             }
         }
+
         observeData()
     }
 

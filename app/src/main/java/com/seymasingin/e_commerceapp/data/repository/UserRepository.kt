@@ -45,4 +45,8 @@ class UserRepository {
     suspend fun getUserId() = withContext(Dispatchers.IO) {
         auth.currentUser?.uid.orEmpty()
     }
+
+    suspend fun getCurrentUser() = withContext(Dispatchers.IO) {
+        auth.currentUser
+    }
 }
