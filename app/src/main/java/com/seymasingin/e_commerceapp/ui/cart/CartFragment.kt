@@ -66,20 +66,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                     progressBarCart.gone()
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
-            }
-        }
 
-        viewModel.productDeleteState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                is DeleteState.DeleteSuccess -> {
-                    Snackbar.make(requireView(), state.successMessage, 1000).show()
-                }
-            }
-        }
-
-        viewModel.clearCartState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                is DeleteState.DeleteSuccess -> {
+                is CartState.DeleteSuccess -> {
                     Snackbar.make(requireView(), state.successMessage, 1000).show()
                 }
             }

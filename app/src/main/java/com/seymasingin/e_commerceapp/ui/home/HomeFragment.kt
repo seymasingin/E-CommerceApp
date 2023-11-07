@@ -38,6 +38,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 findNavController().navigate(R.id.homeToSignIn)
             }
         }
+
         observeData()
     }
 

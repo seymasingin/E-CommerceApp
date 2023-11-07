@@ -18,12 +18,6 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     private var _cartState = MutableLiveData<CartState>()
     val cartState: LiveData<CartState> get() = _cartState
 
-    private var _productDeleteState = MutableLiveData<DeleteState>()
-    val productDeleteState: LiveData<DeleteState> get() = _productDeleteState
-
-    private var _clearCartState = MutableLiveData<DeleteState>()
-    val clearCartState: LiveData<DeleteState> get() = _clearCartState
-
     fun getCartProducts() = viewModelScope.launch {
         _cartState.value = CartState.Loading
 
@@ -37,7 +31,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     fun deleteFromCart(id: Int) = viewModelScope.launch {
         val result = productRepository.deleteFromCart(id)
         if (result is Resource.Success) {
-            _productDeleteState.value = DeleteState.DeleteSuccess(result.data)
+            _cartState.value = CartState.DeleteSuccess(result.data)
         }
         getCartProducts()
     }
@@ -45,7 +39,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     fun clearCart() = viewModelScope.launch {
         val result = productRepository.clearCart()
         if(result is Resource.Success) {
-            _clearCartState.value = DeleteState.DeleteSuccess(result.data)
+            _cartState.value = CartState.DeleteSuccess(result.data)
         }
         getCartProducts()
     }
@@ -56,8 +50,6 @@ sealed interface CartState {
     data class SuccessState(val products: List<ProductUI>) : CartState
     data class EmptyScreen(val failMessage: String) : CartState
     data class ShowPopUp(val errorMessage: String) : CartState
+    data class DeleteSuccess(val successMessage: String) : CartState
 }
 
-sealed interface DeleteState {
-    data class DeleteSuccess(val successMessage: String) : DeleteState
-}

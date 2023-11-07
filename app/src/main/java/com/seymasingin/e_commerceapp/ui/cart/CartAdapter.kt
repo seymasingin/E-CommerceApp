@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.BasketCartBinding
 
-
 class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit, private val onProductClick: (Int) -> Unit) :
     ListAdapter<ProductUI, CartAdapter.CartHolder>(CartProductDiffUtilCallBack()) {
 

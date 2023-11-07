@@ -18,9 +18,6 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
     private var _detailState = MutableLiveData<DetailState>()
     val detailState: LiveData<DetailState> get() = _detailState
 
-    private var _addCartState = MutableLiveData<AddCartState>()
-    val addCartState: LiveData<AddCartState> get() = _addCartState
-
     fun getProductDetail(id: Int) = viewModelScope.launch {
         _detailState.value = DetailState.Loading
 
@@ -34,10 +31,10 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
     fun addToCart(productId: Int) = viewModelScope.launch {
         val result = productRepository.addToCart(productId)
         if (result is Resource.Success) {
-            _addCartState.value = AddCartState.CartAddSuccess(result.data)
+            _detailState.value = DetailState.CartAddSuccess(result.data)
         }
         if (result is Resource.Fail){
-            _addCartState.value = AddCartState.CartAddFail(result.failMessage)
+            _detailState.value = DetailState.CartAddFail(result.failMessage)
         }
     }
 
@@ -56,9 +53,6 @@ sealed interface DetailState {
     data class SuccessState(val product: ProductUI) : DetailState
     data class EmptyScreen(val failMessage: String) : DetailState
     data class ShowPopUp(val errorMessage: String) : DetailState
-}
-
-sealed interface AddCartState {
-    data class CartAddSuccess(val successMessage: String) : AddCartState
-    data class CartAddFail(val failMessage: String) : AddCartState
+    data class CartAddSuccess(val successMessage: String) : DetailState
+    data class CartAddFail(val failMessage: String) : DetailState
 }

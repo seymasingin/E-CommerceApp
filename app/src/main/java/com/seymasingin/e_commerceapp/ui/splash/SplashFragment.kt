@@ -5,25 +5,37 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.seymasingin.e_commerceapp.R
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    private lateinit var auth: FirebaseAuth
+    private val viewModel by viewModels<SplashViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
-
         Handler(Looper.getMainLooper()).postDelayed({
-            if (auth.currentUser != null) {
-                findNavController().navigate(SplashFragmentDirections.splashToHome())
-            } else {
-                findNavController().navigate(SplashFragmentDirections.splashToSignIn())
-            }
+            viewModel.checkCurrentUser()
         }, 3000)
+
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.splashState.observe(viewLifecycleOwner){state ->
+            when(state) {
+                is SplashState.GoToHome -> {
+                    findNavController().navigate(R.id.splashToHome)
+                }
+
+                is SplashState.GoToSignIn -> {
+                    findNavController().navigate(R.id.splashToSignIn)
+                }
+            }
+        }
     }
 }

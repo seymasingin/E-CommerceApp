@@ -94,16 +94,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     binding.progressBar.gone()
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
-            }
-        }
 
-        viewModel.addCartState.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                is AddCartState.CartAddSuccess -> {
+                is DetailState.CartAddSuccess -> {
                     Snackbar.make(requireView(), state.successMessage, 1000).show()
                 }
 
-                is AddCartState.CartAddFail -> {
+                is DetailState.CartAddFail -> {
                     Snackbar.make(requireView(), state.failMessage, 1000).show()
                 }
             }

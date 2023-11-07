@@ -31,14 +31,14 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomNav, navHostFragment.navController)
 
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.splashFragment ||
-                destination.id == R.id.signUpFragment ||
-                destination.id == R.id.signInFragment ||
-                destination.id == R.id.successFragment
+            if (destination.id == R.id.homeFragment ||
+                destination.id == R.id.favoritesFragment ||
+                destination.id == R.id.searchFragment ||
+                destination.id == R.id.cartFragment
             ) {
-                binding.bottomNav.visibility = View.GONE
-            } else {
                 binding.bottomNav.visibility = View.VISIBLE
+            } else {
+                binding.bottomNav.visibility = View.GONE
             }
         }
     }
