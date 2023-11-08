@@ -115,7 +115,7 @@ class ProductRepository(private val productService: ProductService,
     suspend fun deleteFromCart(id: Int): Resource<String> =
         withContext(Dispatchers.IO){
             try {
-                val deleteFromCartRequest = DeleteFromCartRequest(id)
+                val deleteFromCartRequest = DeleteFromCartRequest(id, userRepo.getUserId())
                 val response = productService.deleteFromCart(deleteFromCartRequest).body()
 
                 if (response?.status == 200) {
