@@ -17,7 +17,7 @@ class UserRepository {
                 if (authResult.user != null) {
                     Resource.Success(true)
                 } else {
-                    Resource.Fail("An error occurred during sign in")
+                    Resource.Fail("An error occurred during sign up")
                 }
             } catch (e: Exception) {
                 Resource.Error(e.message.orEmpty())
