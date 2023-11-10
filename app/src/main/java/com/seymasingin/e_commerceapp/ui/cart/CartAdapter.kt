@@ -66,4 +66,16 @@ class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit, private val onP
             return oldItem == newItem
         }
     }
+
+    fun getTotalPrice(): Double {
+        var totalPrice = 0.0
+        currentList.forEach { product ->
+            totalPrice += if (product.saleState) {
+                product.salePrice
+            } else {
+                product.price
+            }
+        }
+        return totalPrice
+    }
 }

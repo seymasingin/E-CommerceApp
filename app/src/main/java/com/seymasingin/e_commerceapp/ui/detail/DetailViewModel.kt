@@ -7,13 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
+import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel  @Inject constructor(private val productRepository: ProductRepository) :
-    ViewModel() {
+class DetailViewModel  @Inject constructor(
+    private val productRepository: ProductRepository,
+    private val userRepository: UserRepository
+) : ViewModel() {
 
     private var _detailState = MutableLiveData<DetailState>()
     val detailState: LiveData<DetailState> get() = _detailState
@@ -21,7 +24,7 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
     fun getProductDetail(id: Int) = viewModelScope.launch {
         _detailState.value = DetailState.Loading
 
-        _detailState.value = when (val result = productRepository.getProductDetail(id)) {
+        _detailState.value = when (val result = productRepository.getProductDetail(userRepository.getUserId(), id)) {
             is Resource.Success -> DetailState.SuccessState(result.data)
             is Resource.Fail -> DetailState.EmptyScreen(result.failMessage)
             is Resource.Error -> DetailState.ShowPopUp(result.errorMessage)
@@ -29,7 +32,7 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
     }
 
     fun addToCart(productId: Int) = viewModelScope.launch {
-        val result = productRepository.addToCart(productId)
+        val result = productRepository.addToCart(userRepository.getUserId(), productId)
         if (result is Resource.Success) {
             _detailState.value = DetailState.CartAddSuccess(result.data)
         }
@@ -40,9 +43,9 @@ class DetailViewModel  @Inject constructor(private val productRepository: Produc
 
     fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
         if (product.isFav) {
-            productRepository.deleteFromFavorites(product)
+            productRepository.deleteFromFavorites(product, userRepository.getUserId())
         } else {
-            productRepository.addToFavorites(product)
+            productRepository.addToFavorites(product, userRepository.getUserId())
         }
         getProductDetail(product.id)
     }

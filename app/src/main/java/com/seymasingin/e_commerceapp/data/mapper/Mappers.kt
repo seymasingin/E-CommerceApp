@@ -21,7 +21,7 @@ fun Product.mapToProductUI(favorites: List<Int>) =
         isFav = favorites.contains(id)
     )
 
-fun List<Product>.mapProductToProductUI(favorites: List<Int>) =
+fun List<Product>.mapProductToProductUI(favorites: List<Int>? = null) =
     map {
         ProductUI(
             id = it.id ?: 1,
@@ -36,7 +36,7 @@ fun List<Product>.mapProductToProductUI(favorites: List<Int>) =
             rate = it.rate ?: 0.0,
             count = it.count ?: 0,
             saleState = it.saleState ?: false,
-            isFav = favorites.contains(it.id)
+            isFav = favorites?.contains(it.id) ?: false
         )
     }
 

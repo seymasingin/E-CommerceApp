@@ -127,20 +127,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/icSignUpEmpty"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/warning_icon"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tvSignUpEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="WARNING"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

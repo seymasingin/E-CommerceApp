@@ -20,7 +20,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private val viewModel by viewModels<CartViewModel>()
 
-    private val cartAdapter = CartAdapter(onDeleteFromBasket = ::onDeleteFromBasket, onProductClick = ::onProductClick)
+    private val cartAdapter =
+        CartAdapter(onDeleteFromBasket = ::onDeleteFromBasket, onProductClick = ::onProductClick)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,11 +46,14 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
                 is CartState.SuccessState -> {
                     progressBarCart.gone()
-                    cartAdapter.submitList(state.products)
+                    cartAdapter.submitList(state.products) {
+                        val totalPrice = cartAdapter.getTotalPrice()
+                        total.text = "${totalPrice.toString()} £"
 
-                    btnComplete.setOnClickListener {
-                        if(state.products.isNotEmpty()) {
-                            findNavController().navigate(R.id.cartToPayment)
+                        btnComplete.setOnClickListener {
+                            if (state.products.isNotEmpty()) {
+                                findNavController().navigate(R.id.cartToPayment)
+                            }
                         }
                     }
                 }

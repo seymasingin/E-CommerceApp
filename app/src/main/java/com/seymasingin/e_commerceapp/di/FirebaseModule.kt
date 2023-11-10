@@ -1,6 +1,6 @@
 package com.seymasingin.e_commerceapp.di
 
-import com.seymasingin.e_commerceapp.data.repository.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,9 +9,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UserModule {
+object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository() = UserRepository()
+    fun provideFirebaseAuth() = FirebaseAuth.getInstance()
 }

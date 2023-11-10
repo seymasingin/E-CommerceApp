@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
     fun getProducts() = viewModelScope.launch {
         _productState.value = HomeState.Loading
 
-        _productState.value = when ( val result = productRepository.getProducts()) {
+        _productState.value = when ( val result = productRepository.getProducts(userRepository.getUserId())) {
             is Resource.Success -> HomeState.SuccessState(result.data)
             is Resource.Fail -> HomeState.EmptyScreen(result.failMessage)
             is Resource.Error -> HomeState.ShowPopUp(result.errorMessage)
@@ -44,9 +44,9 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
 
     fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
         if (product.isFav) {
-            productRepository.deleteFromFavorites(product)
+            productRepository.deleteFromFavorites(product, userRepository.getUserId())
         } else {
-            productRepository.addToFavorites(product)
+            productRepository.addToFavorites(product, userRepository.getUserId())
         }
         getProducts()
     }

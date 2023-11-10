@@ -7,13 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
+import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(private val productRepository: ProductRepository) :
-    ViewModel() {
+class CartViewModel @Inject constructor(
+    private val productRepository: ProductRepository,
+    private val userRepository: UserRepository
+    ) : ViewModel() {
 
     private var _cartState = MutableLiveData<CartState>()
     val cartState: LiveData<CartState> get() = _cartState
@@ -21,7 +24,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     fun getCartProducts() = viewModelScope.launch {
         _cartState.value = CartState.Loading
 
-        _cartState.value = when (val result = productRepository.getCartProducts() ){
+        _cartState.value = when (val result = productRepository.getCartProducts(userRepository.getUserId())) {
             is Resource.Success -> CartState.SuccessState(result.data)
             is Resource.Fail -> CartState.EmptyScreen(result.failMessage)
             is Resource.Error -> CartState.ShowPopUp(result.errorMessage)
@@ -29,7 +32,7 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     }
 
     fun deleteFromCart(id: Int) = viewModelScope.launch {
-        val result = productRepository.deleteFromCart(id)
+        val result = productRepository.deleteFromCart(id, userRepository.getUserId())
         if (result is Resource.Success) {
             _cartState.value = CartState.DeleteSuccess(result.data)
         }
@@ -37,8 +40,8 @@ class CartViewModel @Inject constructor(private val productRepository: ProductRe
     }
 
     fun clearCart() = viewModelScope.launch {
-        val result = productRepository.clearCart()
-        if(result is Resource.Success) {
+        val result = productRepository.clearCart(userRepository.getUserId())
+        if (result is Resource.Success) {
             _cartState.value = CartState.DeleteSuccess(result.data)
         }
         getCartProducts()

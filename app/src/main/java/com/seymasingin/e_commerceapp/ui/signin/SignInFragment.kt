@@ -42,16 +42,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             when (state) {
                 SignInState.Loading -> progressBarSignIn.visible()
 
-                is SignInState.SuccessState -> {
+                is SignInState.GoToHome -> {
                     progressBarSignIn.gone()
                     findNavController().navigate(R.id.signInToHome)
-                }
-
-                is SignInState.EmptyScreen -> {
-                    progressBarSignIn.gone()
-                    icSignInEmpty.visible()
-                    tvSignInEmpty.visible()
-                    tvSignInEmpty.text = state.failMessage
                 }
 
                 is SignInState.ShowPopUp -> {

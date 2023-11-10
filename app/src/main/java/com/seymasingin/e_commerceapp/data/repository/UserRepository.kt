@@ -2,47 +2,47 @@ package com.seymasingin.e_commerceapp.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.seymasingin.e_commerceapp.common.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
-class UserRepository {
+class UserRepository (private val firebaseAuth: FirebaseAuth){
 
-    private var auth = FirebaseAuth.getInstance()
+    suspend fun signUp(email: String, password: String): Resource<Unit> {
+        return try {
 
-    suspend fun signUp(email: String, password: String): Resource<Boolean> =
-        withContext(Dispatchers.IO) {
-            try {
-                val authResult = auth.createUserWithEmailAndPassword(email, password).await()
-                if (authResult.user != null) {
-                    Resource.Success(true)
-                } else {
-                    Resource.Fail("An error occurred during sign up")
-                }
-            } catch (e: Exception) {
-                Resource.Error(e.message.orEmpty())
+            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+
+            if (result.user != null) {
+                Resource.Success(Unit)
+            } else {
+                Resource.Error("An error occurred during sign up")
             }
+        } catch (e: Exception) {
+            Resource.Error(e.message.orEmpty())
         }
+    }
 
-    suspend fun signIn(email: String, password: String): Resource<Boolean> =
-        withContext(Dispatchers.IO) {
-            try {
-                val authResult = auth.signInWithEmailAndPassword(email, password).await()
-                if (authResult.user != null) {
-                    Resource.Success(true)
-                } else {
-                    Resource.Fail("An error occurred during sign in")
-                }
-            } catch (e: Exception) {
-                Resource.Error("Password or email is incorrect")
+
+    suspend fun signIn(email: String, password: String): Resource<Unit> {
+
+        return try {
+
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+
+            if (result.user != null) {
+                Resource.Success(Unit)
+            } else {
+                Resource.Error("An error occurred during sign in")
             }
+        } catch (e: Exception) {
+            Resource.Error("Password or email is incorrect")
         }
+    }
 
-    fun getUserId()  = auth.currentUser?.uid.orEmpty()
+    fun getUserId()  = firebaseAuth.currentUser?.uid.orEmpty()
 
-    fun logOut() = auth.signOut()
+    fun logOut() = firebaseAuth.signOut()
 
     fun isUserLoggedIn(): Boolean  {
-        return auth.currentUser!= null
+        return firebaseAuth.currentUser!= null
     }
 }

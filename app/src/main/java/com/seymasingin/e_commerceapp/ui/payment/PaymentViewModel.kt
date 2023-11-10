@@ -5,19 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
+import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PaymentViewModel @Inject constructor(private val productRepository: ProductRepository):
+class PaymentViewModel @Inject constructor(
+    private val productRepository: ProductRepository,
+    private val userRepository: UserRepository
+):
     ViewModel() {
 
     private var _paymentState = MutableLiveData<PaymentState>()
     val paymentState: LiveData<PaymentState> get() = _paymentState
 
     fun clearCart() = viewModelScope.launch {
-        productRepository.clearCart()
+        productRepository.clearCart(userRepository.getUserId())
     }
 
     fun payment(number: String,

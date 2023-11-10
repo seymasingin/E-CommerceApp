@@ -19,15 +19,15 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
 
     fun signUp(email: String, password: String) = viewModelScope.launch {
         if (!checkFields(email, password)) {
-            return@launch
-        }
 
-        _signUpState.value = SignUpState.Loading
 
-        _signUpState.value = when (val result = userRepository.signUp(email, password)) {
-            is Resource.Success -> SignUpState.SuccessState(true)
-            is Resource.Fail -> SignUpState.EmptyScreen(result.failMessage)
-            is Resource.Error -> SignUpState.ShowPopUp(result.errorMessage)
+            _signUpState.value = SignUpState.Loading
+
+            _signUpState.value = when (val result = userRepository.signUp(email, password)) {
+                is Resource.Success -> SignUpState.GoToHome
+                is Resource.Fail -> SignUpState.ShowPopUp(result.failMessage)
+                is Resource.Error -> SignUpState.ShowPopUp(result.errorMessage)
+            }
         }
     }
 
@@ -50,7 +50,6 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
 
 sealed interface SignUpState {
     object Loading : SignUpState
-    data class SuccessState(val successState: Boolean) : SignUpState
-    data class EmptyScreen(val failMessage: String) : SignUpState
+    object GoToHome : SignUpState
     data class ShowPopUp(val errorMessage: String) : SignUpState
 }
