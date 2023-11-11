@@ -1,6 +1,7 @@
 package com.seymasingin.e_commerceapp.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import com.seymasingin.e_commerceapp.data.source.local.ProductDao
@@ -17,11 +18,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRepository(productService: ProductService,
+    fun provideProductRepository(productService: ProductService,
                           productDao: ProductDao) = ProductRepository(productService, productDao)
 
     @Provides
     @Singleton
-    fun provideUserRepository(firebaseAuth: FirebaseAuth) = UserRepository(firebaseAuth)
-
+    fun provideUserRepository(firebaseAuth: FirebaseAuth,
+                              firestore: FirebaseFirestore) = UserRepository(firebaseAuth, firestore)
 }

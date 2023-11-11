@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:icon="@drawable/search_icon"
         android:title="" />
+
     <item
         android:id="@+id/favoritesFragment"
         android:title=""

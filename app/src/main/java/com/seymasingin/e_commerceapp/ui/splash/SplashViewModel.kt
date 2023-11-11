@@ -23,7 +23,7 @@ class SplashViewModel @Inject constructor(private val userRepository: UserReposi
         }
     }
 
-    fun checkCurrentUser()= viewModelScope.launch {
+    private fun checkCurrentUser()= viewModelScope.launch {
         if(userRepository.isUserLoggedIn()){
             _splashState.value = SplashState.GoToHome
         }

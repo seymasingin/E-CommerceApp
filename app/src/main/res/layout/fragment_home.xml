@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="ALL PRODUCTS"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -37,12 +37,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="BEST PRICES"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarHome" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSaleProducts"
@@ -56,28 +56,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:itemCount="5"
         tools:listitem="@layout/sale_cart" />
-
-    <ImageView
-        android:id="@+id/logOut"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/logout_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:text="Log Out"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/logOut"
-        app:layout_constraintEnd_toStartOf="@+id/logOut"
-        app:layout_constraintTop_toTopOf="@+id/logOut" />
 
     <ProgressBar
         android:id="@+id/progressBarSale"
@@ -151,5 +129,27 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/emptyWarningSale"
         app:layout_constraintTop_toBottomOf="@+id/emptyWarningSale" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarHome"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/darkgray"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Welcome" />
+
+    <ImageView
+        android:id="@+id/ic_user"
+        android:layout_width="32dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/person_icon"
+        app:layout_constraintEnd_toEndOf="@+id/toolbarHome"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

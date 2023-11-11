@@ -6,24 +6,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
+import com.seymasingin.e_commerceapp.data.model.User
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
 
     private var _signUpState = MutableLiveData<SignUpState>()
     val signUpState: LiveData<SignUpState> get() = _signUpState
 
-    fun signUp(email: String, password: String) = viewModelScope.launch {
-        if (!checkFields(email, password)) {
-
-
+    fun signUp(user: User, password: String) = viewModelScope.launch {
+        if (checkFields(user.email!!, password)) {
             _signUpState.value = SignUpState.Loading
 
-            _signUpState.value = when (val result = userRepository.signUp(email, password)) {
+            _signUpState.value = when (val result = userRepository.signUp(user, password)) {
                 is Resource.Success -> SignUpState.GoToHome
                 is Resource.Fail -> SignUpState.ShowPopUp(result.failMessage)
                 is Resource.Error -> SignUpState.ShowPopUp(result.errorMessage)
@@ -39,7 +39,8 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
             }
 
             password.length < 6 -> {
-                _signUpState.value = SignUpState.ShowPopUp("Password length should be more than six characters!")
+                _signUpState.value =
+                    SignUpState.ShowPopUp("Password length should be more than six characters!")
                 false
             }
 

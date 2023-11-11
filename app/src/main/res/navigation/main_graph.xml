@@ -18,6 +18,9 @@
             app:destination="@id/signInFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/homeToProfile"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -118,6 +121,15 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/signUpToSignIn"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.seymasingin.e_commerceapp.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/profileToSignIn"
             app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

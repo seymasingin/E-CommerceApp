@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.seymasingin.e_commerceapp.R
 import com.seymasingin.e_commerceapp.common.gone
@@ -29,13 +30,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.getProducts()
         viewModel.getSaleProducts()
+        viewModel.getCurrentUser()
 
         with(binding) {
             rvAllProducts.adapter = productAdapter
             rvSaleProducts.adapter = saleAdapter
-            logOut.setOnClickListener{
-                viewModel.logOut()
-                findNavController().navigate(R.id.homeToSignIn)
+            icUser.setOnClickListener{
+                findNavController().navigate(R.id.homeToProfile)
             }
         }
 
@@ -63,6 +64,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     progressBarAll.gone()
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
+
+                else -> {}
             }
         }
 
@@ -86,6 +89,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     progressBarSale.gone()
                     Snackbar.make(requireView(), state.errorMessage, 1000).show()
                 }
+
+                else -> {}
+            }
+        }
+
+        viewModel.userState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is HomeState.UserState -> {
+                    toolbarHome.title = "Welcome ${state.user.name}"
+                }
+
+                else -> {}
             }
         }
     }

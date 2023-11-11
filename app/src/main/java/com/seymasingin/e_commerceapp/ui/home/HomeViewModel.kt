@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seymasingin.e_commerceapp.common.Resource
+import com.seymasingin.e_commerceapp.data.model.User
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
+import com.seymasingin.e_commerceapp.ui.profile.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +23,13 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
 
     private var _saleProductsState = MutableLiveData<HomeState>()
     val saleProductsState: LiveData<HomeState> get() = _saleProductsState
+
+    private var _userState = MutableLiveData<HomeState>()
+    val userState: LiveData<HomeState> get() = _userState
+
+    fun getCurrentUser() = viewModelScope.launch {
+        _userState.value = HomeState.UserState(userRepository.getUser())
+    }
 
     fun getProducts() = viewModelScope.launch {
         _productState.value = HomeState.Loading
@@ -50,10 +59,6 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
         }
         getProducts()
     }
-
-    fun logOut() {
-        userRepository.logOut()
-    }
 }
 
 sealed interface HomeState {
@@ -61,4 +66,5 @@ sealed interface HomeState {
     data class SuccessState(val products: List<ProductUI>) : HomeState
     data class EmptyScreen(val failMessage: String) : HomeState
     data class ShowPopUp(val errorMessage: String) : HomeState
+    data class UserState(val user: User) : HomeState
 }
