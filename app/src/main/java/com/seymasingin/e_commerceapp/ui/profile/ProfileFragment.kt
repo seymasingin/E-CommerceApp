@@ -22,8 +22,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.icLogout.setOnClickListener {
-            viewModel.logOut()
+        with(binding) {
+            icLogout.setOnClickListener {
+                viewModel.logOut()
+            }
+
+            fabBackProfile.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
 
         observeData()
