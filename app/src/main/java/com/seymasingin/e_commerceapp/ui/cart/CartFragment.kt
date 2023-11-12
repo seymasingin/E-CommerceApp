@@ -47,8 +47,14 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 is CartState.SuccessState -> {
                     progressBarCart.gone()
                     cartAdapter.submitList(state.products) {
+
                         val totalPrice = cartAdapter.getTotalPrice()
-                        total.text = "${totalPrice.toString()} £"
+
+                        if (state.products.isNotEmpty()) {
+                            tvTotalPrice.visible()
+                            total.visible()
+                            total.text = "${totalPrice.toString()} £"
+                        }
 
                         btnComplete.setOnClickListener {
                             if (state.products.isNotEmpty()) {
@@ -64,6 +70,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                     icCartEmpty.visible()
                     tvCartEmpty.visible()
                     tvCartEmpty.text = state.failMessage
+                    tvTotalPrice.gone()
+                    total.gone()
                 }
 
                 is CartState.ShowPopUp -> {

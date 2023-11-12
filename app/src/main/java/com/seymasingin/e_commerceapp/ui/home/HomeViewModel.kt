@@ -9,7 +9,6 @@ import com.seymasingin.e_commerceapp.data.model.User
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.data.repository.ProductRepository
 import com.seymasingin.e_commerceapp.data.repository.UserRepository
-import com.seymasingin.e_commerceapp.ui.profile.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +25,27 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
 
     private var _userState = MutableLiveData<HomeState>()
     val userState: LiveData<HomeState> get() = _userState
+
+    private var _catState = MutableLiveData<HomeState>()
+    val catState: LiveData<HomeState> get() = _catState
+
+    fun getCategories() = viewModelScope.launch {
+        _catState.value = when ( val result = productRepository.getCategories()) {
+            is Resource.Success -> HomeState.CategoryState(result.data)
+            is Resource.Fail -> HomeState.ShowPopUp(result.failMessage)
+            is Resource.Error -> HomeState.ShowPopUp(result.errorMessage)
+        }
+    }
+
+    fun getProductsByCategory(category: String) = viewModelScope.launch {
+        _productState.value = HomeState.Loading
+
+        _productState.value = when ( val result = productRepository.getProductsByCategory(category,userRepository.getUserId())) {
+            is Resource.Success -> HomeState.SuccessState(result.data)
+            is Resource.Fail -> HomeState.EmptyScreen(result.failMessage)
+            is Resource.Error -> HomeState.ShowPopUp(result.errorMessage)
+        }
+    }
 
     fun getCurrentUser() = viewModelScope.launch {
         _userState.value = HomeState.UserState(userRepository.getUser())
@@ -67,4 +87,5 @@ sealed interface HomeState {
     data class EmptyScreen(val failMessage: String) : HomeState
     data class ShowPopUp(val errorMessage: String) : HomeState
     data class UserState(val user: User) : HomeState
+    data class CategoryState(val categories: List<String>) : HomeState
 }

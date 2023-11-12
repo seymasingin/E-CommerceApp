@@ -173,4 +173,35 @@ class ProductRepository(private val productService: ProductService,
                 Resource.Error(e.message.orEmpty())
             }
         }
+
+    suspend fun getCategories(): Resource<List<String>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = productService.getCategories().body()
+                if ( response?.status == 200) {
+                    Resource.Success(response.categories.orEmpty())
+                }
+                else {
+                    Resource.Fail(response?.message.orEmpty())
+                }
+            } catch (e: Exception) {
+                Resource.Error(e.message.orEmpty())
+            }
+        }
+
+    suspend fun getProductsByCategory(category: String, userId: String): Resource<List<ProductUI>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val favorites = productDao.getProductIds(userId)
+                val response = productService.getProductsByCategory(category).body()
+
+                if (response?.status == 200) {
+                    Resource.Success(response.products.orEmpty().mapProductToProductUI(favorites))
+                } else {
+                    Resource.Fail(response?.message.orEmpty())
+                }
+            } catch (e: Exception) {
+                Resource.Error(e.message.orEmpty())
+            }
+        }
 }

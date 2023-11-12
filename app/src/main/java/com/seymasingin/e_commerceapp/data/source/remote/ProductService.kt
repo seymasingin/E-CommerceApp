@@ -5,6 +5,7 @@ import com.seymasingin.e_commerceapp.data.model.request.ClearCartRequest
 import com.seymasingin.e_commerceapp.data.model.request.DeleteFromCartRequest
 import com.seymasingin.e_commerceapp.data.model.response.BaseResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetCartProductsResponse
+import com.seymasingin.e_commerceapp.data.model.response.GetCategoryResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetProductDetailResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetProductsResponse
 import com.seymasingin.e_commerceapp.data.model.response.GetSaleProductsResponse
@@ -51,4 +52,13 @@ interface ProductService {
     suspend fun clearCart(
         @Body clearCartRequest: ClearCartRequest
     ): Response<BaseResponse>
+
+    @GET("get_categories.php")
+    suspend fun getCategories(): Response<GetCategoryResponse>
+
+    @GET("get_products_by_category.php")
+    suspend fun getProductsByCategory(
+        @Query("category") category: String
+    ): Response<GetProductsResponse>
+
 }

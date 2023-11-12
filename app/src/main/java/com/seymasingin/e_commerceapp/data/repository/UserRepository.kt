@@ -13,7 +13,7 @@ class UserRepository (
     suspend fun signUp(user: User, password: String): Resource<Unit> {
         return try {
 
-            val result = firebaseAuth.createUserWithEmailAndPassword(user.email!!, password).await()
+            val result = firebaseAuth.createUserWithEmailAndPassword(user.email.orEmpty(), password).await()
 
             if (result.user != null) {
                 val user = User(

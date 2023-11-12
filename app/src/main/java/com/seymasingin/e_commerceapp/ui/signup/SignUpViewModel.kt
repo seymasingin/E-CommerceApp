@@ -20,7 +20,7 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
     val signUpState: LiveData<SignUpState> get() = _signUpState
 
     fun signUp(user: User, password: String) = viewModelScope.launch {
-        if (checkFields(user.email!!, password)) {
+        if (checkFields(user.email.orEmpty(), password)) {
             _signUpState.value = SignUpState.Loading
 
             _signUpState.value = when (val result = userRepository.signUp(user, password)) {

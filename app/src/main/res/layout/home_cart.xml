@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     app:cardBackgroundColor="@color/lightbej"
     app:cardCornerRadius="30dp"
     app:cardElevation="8dp"
-    app:contentPadding="5dp"
+    app:contentPadding="3dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -81,9 +81,9 @@
             android:id="@+id/productFav"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/productSale"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@+id/productSale"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/fav_unselected" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
