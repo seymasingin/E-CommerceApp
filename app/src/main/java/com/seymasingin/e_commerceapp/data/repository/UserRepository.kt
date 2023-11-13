@@ -22,7 +22,6 @@ class UserRepository (
                     surname = user.surname,
                     email = user.email
                 )
-
                 firestore.collection("users").document(getUserId()).set(user).await()
 
                 Resource.Success(Unit)
