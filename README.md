@@ -29,4 +29,5 @@ An E-Commerce App which created with Kotlin and XML
 - FirebaseAuth
 - FirebaseDatabase
 - Hilt
+- LottieAnimation
 
