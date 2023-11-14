@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.seymasingin.e_commerceapp.common.gone
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.FavCartBinding
 
@@ -43,10 +45,10 @@ class FavAdapter(private val onDeleteFromFav: (ProductUI) -> Unit,
                 if (favProduct.saleState) {
                     favPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     salePriceFav.text = "${favProduct.salePrice} £"
-                    salePriceFav.visibility = View.VISIBLE
+                    salePriceFav.visible()
                 } else {
                     favPrice.paintFlags = 0
-                    salePriceFav.visibility = View.GONE
+                    salePriceFav.gone()
                 }
 
                 Glide.with(favImage).load(favProduct.imageOne).into(favImage)

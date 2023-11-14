@@ -67,10 +67,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     if(state.product.saleState){
                         priceDetail.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                         salePriceDetail.text = "${state.product.salePrice} £"
-                        salePriceDetail.visibility = View.VISIBLE
+                        salePriceDetail.visible()
                     } else {
                         priceDetail.paintFlags = 0
-                        salePriceDetail.visibility = View.GONE
+                        salePriceDetail.gone()
                     }
 
                     count.text = "${state.product.count} pieces left"

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.seymasingin.e_commerceapp.common.gone
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.SearchCartBinding
 
@@ -37,11 +39,11 @@ class SearchAdapter(
                 if (product.saleState) {
                     productPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     productSale.text = "${product.salePrice} £"
-                    productSale.visibility = View.VISIBLE
+                    productSale.visible()
                 }
                 else{
                     productPrice.paintFlags = 0
-                    productSale.visibility = View.GONE
+                    productSale.gone()
                 }
                 Glide.with(productImg1).load(product.imageOne).into(productImg1)
 

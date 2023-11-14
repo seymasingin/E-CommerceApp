@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.seymasingin.e_commerceapp.common.gone
+import com.seymasingin.e_commerceapp.common.visible
 import com.seymasingin.e_commerceapp.data.model.response.ProductUI
 import com.seymasingin.e_commerceapp.databinding.BasketCartBinding
 
@@ -38,10 +40,10 @@ class CartAdapter(private val onDeleteFromBasket: (Int) -> Unit, private val onP
                 if (product.saleState) {
                     basketCartPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     basketSalePrice.text = "${product.salePrice} £"
-                    basketSalePrice.visibility = View.VISIBLE
+                    basketSalePrice.visible()
                 } else {
                     basketCartPrice.paintFlags = 0
-                    basketSalePrice.visibility = View.GONE
+                    basketSalePrice.gone()
                 }
 
                 Glide.with(basketCartImage).load(product.imageOne).into(basketCartImage)
