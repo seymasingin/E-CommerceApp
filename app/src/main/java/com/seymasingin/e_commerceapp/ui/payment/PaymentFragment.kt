@@ -49,8 +49,10 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 val city = etCity.text.toString()
                 val town = etTown.text.toString()
                 val address = etAddress.text.toString()
+                val selectedMonth = etMonth.text.toString()
+                val selectedYear = etYear.text.toString()
 
-                viewModel.payment(number, cvc, name, city, town, address)
+                viewModel.payment(number, cvc, name, city, town, address, selectedMonth, selectedYear)
             }
         }
 

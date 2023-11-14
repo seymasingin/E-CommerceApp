@@ -29,11 +29,13 @@ class PaymentViewModel @Inject constructor(
                 name: String,
                 city: String,
                 town: String,
-                address:String ) = viewModelScope.launch {
+                address:String,
+                selectedMonth: String?,
+                selectedYear: String?) = viewModelScope.launch {
 
         _paymentState.value = PaymentState.Loading
 
-        if (!checkFields(number, cvc, name, city, town, address)) {
+        if (!checkFields(number, cvc, name, city, town, address, selectedMonth, selectedYear)) {
             return@launch
         }
 
@@ -47,7 +49,9 @@ class PaymentViewModel @Inject constructor(
                             name: String,
                             city: String,
                             town: String,
-                            address:String ): Boolean {
+                            address:String,
+                            selectedMonth: String?,
+                            selectedYear: String?): Boolean {
         return when {
             number.length < 16 -> {
                 _paymentState.value = PaymentState.ShowPopUp("Card number cannot be less than 16")
@@ -71,6 +75,15 @@ class PaymentViewModel @Inject constructor(
             }
             address.isEmpty() -> {
                 _paymentState.value = PaymentState.ShowPopUp("Address can not be empty!")
+                false
+            }
+            selectedMonth.isNullOrEmpty() -> {
+                _paymentState.value = PaymentState.ShowPopUp("Please select a month")
+                false
+            }
+
+            selectedYear.isNullOrEmpty() -> {
+                _paymentState.value = PaymentState.ShowPopUp("Please select a year")
                 false
             }
 
