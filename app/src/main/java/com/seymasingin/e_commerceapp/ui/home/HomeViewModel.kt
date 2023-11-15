@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
 
     private var currentCategory: String? = null
 
-    fun setCurrentCategory(category: String?) {
+    fun setCurrentCategory(category: String) {
         currentCategory = category
     }
 
