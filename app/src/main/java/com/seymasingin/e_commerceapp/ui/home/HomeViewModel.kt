@@ -71,7 +71,11 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
         }
     }
 
-    //private var currentCategory: String? = null
+    private var currentCategory: String? = null
+
+    fun setCurrentCategory(category: String?) {
+        currentCategory = category
+    }
 
     fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
         if (product.isFav) {
@@ -79,7 +83,12 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
         } else{
             productRepository.addToFavorites(product, userRepository.getUserId())
         }
-        getProducts()
+
+        currentCategory?.let {
+            getProductsByCategory(it)
+        } ?: run {
+            getProducts()
+        }
     }
 }
 

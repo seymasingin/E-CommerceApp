@@ -138,6 +138,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun onCategoryClick(category: String) {
+        viewModel.setCurrentCategory(category)
         viewModel.getProductsByCategory(category)
     }
 }
