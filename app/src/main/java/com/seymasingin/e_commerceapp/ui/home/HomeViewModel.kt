@@ -62,6 +62,7 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
     }
 
     fun getSaleProducts() = viewModelScope.launch {
+
         _saleProductsState.value = HomeState.Loading
 
         _saleProductsState.value = when ( val result = productRepository.getSaleProducts()) {
