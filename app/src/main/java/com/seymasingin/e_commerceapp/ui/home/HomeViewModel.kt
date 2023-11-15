@@ -76,7 +76,7 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
     fun setFavoriteState(product: ProductUI) = viewModelScope.launch {
         if (product.isFav) {
             productRepository.deleteFromFavorites(product, userRepository.getUserId())
-        } else {
+        } else{
             productRepository.addToFavorites(product, userRepository.getUserId())
         }
         getProducts()
