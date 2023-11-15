@@ -1,194 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bej"
-    tools:context=".ui.home.HomeFragment">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/allProducts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="ALL PRODUCTS"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCat" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAllProducts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="6dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allProducts"
-        tools:itemCount="15"
-        tools:listitem="@layout/home_cart" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="BEST PRICES"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarHome" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSaleProducts"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:itemCount="5"
-        tools:listitem="@layout/sale_cart" />
-
-    <ProgressBar
-        android:id="@+id/progressBarSale"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginEnd="180dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rvSaleProducts"
-        app:layout_constraintEnd_toEndOf="@+id/rvSaleProducts"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rvSaleProducts" />
-
-    <ProgressBar
-        android:id="@+id/progressBarAll"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginEnd="180dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/rvAllProducts"
-        app:layout_constraintStart_toStartOf="@+id/rvAllProducts"
-        app:layout_constraintTop_toTopOf="@+id/rvAllProducts" />
-
-    <ImageView
-        android:id="@+id/emptyWarning"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/warning_icon"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/rvAllProducts"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="@+id/rvAllProducts"
-        tools:layout_editor_absoluteY="299dp" />
-
-    <TextView
-        android:id="@+id/emptyWarnText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="WARNING"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/emptyWarning"
-        app:layout_constraintStart_toStartOf="@+id/emptyWarning"
-        app:layout_constraintTop_toBottomOf="@+id/emptyWarning" />
-
-    <ImageView
-        android:id="@+id/emptyWarningSale"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/warning_icon"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/emptyWarnTextSale"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvSaleProducts" />
-
-    <TextView
-        android:id="@+id/emptyWarnTextSale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="WARNING"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/rvSaleProducts"
-        app:layout_constraintEnd_toEndOf="@+id/emptyWarningSale"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/emptyWarningSale"
-        app:layout_constraintTop_toBottomOf="@+id/emptyWarningSale" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarHome"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/darkgray"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Welcome" />
-
-    <ImageView
-        android:id="@+id/ic_user"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/person_icon"
-        app:layout_constraintEnd_toEndOf="@+id/toolbarHome"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/allCategory"
-        app:layout_constraintTop_toBottomOf="@+id/rvSaleProducts"
-        tools:itemCount="8"
-        tools:listitem="@layout/category_text">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/allCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/lightbej"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rvCat"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/rvCat">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bej"
+        tools:context=".ui.home.HomeFragment">
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/allProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="8dp"
-            android:paddingTop="4dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="4dp"
-            android:text="All"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="ALL PRODUCTS"
             android:textSize="18sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvCat" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAllProducts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allProducts"
+            app:layout_constraintVertical_bias="1.0"
+            tools:itemCount="15"
+            tools:listitem="@layout/home_cart" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="BEST PRICES"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarHome" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSaleProducts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:itemCount="5"
+            tools:listitem="@layout/sale_cart" />
+
+        <ProgressBar
+            android:id="@+id/progressBarSale"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:layout_marginEnd="180dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/rvSaleProducts"
+            app:layout_constraintEnd_toEndOf="@+id/rvSaleProducts"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rvSaleProducts" />
+
+        <ProgressBar
+            android:id="@+id/progressBarAll"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:layout_marginEnd="180dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rvAllProducts"
+            app:layout_constraintStart_toStartOf="@+id/rvAllProducts"
+            app:layout_constraintTop_toTopOf="@+id/rvAllProducts" />
+
+        <ImageView
+            android:id="@+id/emptyWarning"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/warning_icon"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/rvAllProducts"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="@+id/rvAllProducts"
+            app:layout_constraintTop_toTopOf="@+id/rvAllProducts" />
+
+        <TextView
+            android:id="@+id/emptyWarnText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="WARNING"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/emptyWarning"
+            app:layout_constraintStart_toStartOf="@+id/emptyWarning"
+            app:layout_constraintTop_toBottomOf="@+id/emptyWarning" />
+
+        <ImageView
+            android:id="@+id/emptyWarningSale"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/warning_icon"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/emptyWarnTextSale"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvSaleProducts" />
+
+        <TextView
+            android:id="@+id/emptyWarnTextSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WARNING"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/rvSaleProducts"
+            app:layout_constraintEnd_toEndOf="@+id/emptyWarningSale"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/emptyWarningSale"
+            app:layout_constraintTop_toBottomOf="@+id/emptyWarningSale" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarHome"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/darkgray"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Welcome" />
+
+        <ImageView
+            android:id="@+id/ic_user"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/person_icon"
+            app:layout_constraintEnd_toEndOf="@+id/toolbarHome"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/allCategory"
+            app:layout_constraintTop_toBottomOf="@+id/rvSaleProducts"
+            tools:itemCount="8"
+            tools:listitem="@layout/category_text">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/allCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/lightbej"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rvCat"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/rvCat">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="All"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
