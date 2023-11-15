@@ -40,6 +40,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             icUser.setOnClickListener{
                 findNavController().navigate(R.id.homeToProfile)
             }
+
             allCategory.setOnClickListener {
                 viewModel.getProducts()
             }
