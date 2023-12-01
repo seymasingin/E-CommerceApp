@@ -2,19 +2,19 @@ An E-Commerce App which created with Kotlin and XML
 
 # <sub>**Pages**</sub>
 
-![1](https://github.com/seymasingin/E-CommerceApp/assets/113527683/2ef22870-b7c9-4499-93e7-ca2ede3c0337)
+![1](https://github.com/seymasingin/E-CommerceApp/assets/113527683/e80d8c68-2c74-4940-a800-623c6498b435)
 
 </br>
 
-![2](https://github.com/seymasingin/E-CommerceApp/assets/113527683/c374bebe-f8bd-4300-bf60-73b7448bb815)
+![2](https://github.com/seymasingin/E-CommerceApp/assets/113527683/bc4158da-ebe4-4701-87c9-2240b3c1d1ba)
 
 </br>
 
-![3](https://github.com/seymasingin/E-CommerceApp/assets/113527683/1b230d7a-5e57-4add-a108-8452a281c9ae)
+![3](https://github.com/seymasingin/E-CommerceApp/assets/113527683/9a83b329-8f7a-4d34-bb4d-cefda6c2d0ac)
 
 </br>
 
-![4](https://github.com/seymasingin/E-CommerceApp/assets/113527683/9b01b9c0-bd88-4da8-a282-3b29933ee091)
+![4](https://github.com/seymasingin/E-CommerceApp/assets/113527683/4faa4dec-4caa-4015-a547-ab6537ec7888)
 
 # <sub>**Topics**</sub>
 - Kotlin
